@@ -7,19 +7,20 @@ module.exports = {
         'vuetify'
     ],
     pwa: {
+        themeColor: "#666",
+        backgroundColor: "#ffffff",
+
         manifestOptions: {
             name: "Sudoku",
-            themeColor: "#666",
-            backgroundColor: "#ffffff",
-            workboxOptions: {
-                skipWaiting: true
-            },
+            display: "standalone",
             faviconSVG: null,
-            favicon32: 'images/icons/favicon-32x32.png',
-            favicon16: 'images/icons/favicon-16x16.png',
-            appleTouchIcon: 'images/icons/apple-touch-icon-152x152.png',
-            maskIcon: 'images/icons/safari-pinned-tab.svg',
-            msTileImage: 'images/icons/msapplication-icon-144x144.png',
+            iconPaths: {
+                favicon32: 'images/icons/favicon-32x32.png',
+                favicon16: 'images/icons/favicon-16x16.png',
+                appleTouchIcon: 'images/icons/apple-touch-icon-152x152.png',
+                maskIcon: 'images/icons/safari-pinned-tab.svg',
+                msTileImage: 'images/icons/msapplication-icon-144x144.png',
+            },
             icons: [
                 {
                     "src": "./images/icons/apple-touch-icon-60x60.png",
