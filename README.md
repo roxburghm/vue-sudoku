@@ -1,4 +1,4 @@
-![Screenshot](https://raw.githubusercontent.com/roxburghm/vue-sudoku/main/public/android-chrome-192x192.png)
+![Screenshot](https://raw.githubusercontent.com/roxburghm/vue-sudoku/main/public/images/icons/android-chrome-192x192.png)
 
 # Vue Sudoku
 
