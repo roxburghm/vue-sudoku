@@ -24,8 +24,8 @@
                  <SudokuHelpKey key-code="N" action="Toggle notes mode" />
                  <SudokuHelpKey key-code="Ctrl V" action="Toggle validation" />
                  <SudokuHelpKey key-code="Ctrl Z" action="Undo previous move" />
-                 <SudokuHelpKey key-code="Ctrl-Alt R" action="Restart Game" />
-                 <SudokuHelpKey key-code="Ctrl-Alt N" action="Insert Automatic Notes into the puzzle" />
+                 <SudokuHelpKey key-code="Ctrl-Alt R" action="Restart game" />
+                 <SudokuHelpKey key-code="Ctrl-Alt N" action="Insert automatic notes into the puzzle" />
                  <SudokuHelpKey key-code="?" action="This help" />
                 </tbody>
             </v-simple-table>
