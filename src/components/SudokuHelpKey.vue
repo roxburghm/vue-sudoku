@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>
+        <td class="text-no-wrap">
             {{ keyCode }}
         </td>
         <td>
