@@ -6,7 +6,7 @@ A simple and elegant version of Sudoku with multiple levels of difficulty, undo 
 
 Play Sudoku anywhere, anytime, on any device with no ads.
 
-![Screenshot](https://raw.githubusercontent.com/roxburghm/vue-sudoku/main/public/imagesScreenshot_20230427-224017.png)
+![Screenshot](https://raw.githubusercontent.com/roxburghm/vue-sudoku/main/public/images/Screenshot_20230427-224017.png)
 
 ## Features
 
