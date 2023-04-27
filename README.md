@@ -17,6 +17,10 @@ Play Sudoku anywhere, anytime, on any device with no ads.
 * Remaining digit indicators
 * Save and resume game automatically
 
+## Demo
+
+You can see a fully working [demo](https://sudoku.roxb.in/) here
+
 ## Project setup
 ```
 yarn install
