@@ -11,7 +11,7 @@ module.exports = {
         backgroundColor: "#ffffff",
 
         manifestOptions: {
-            shortName: "Sudoku",
+            short_name: "Sudoku",
             name: "Sudoku",
             display: "standalone",
             faviconSVG: null,
