@@ -23,6 +23,12 @@ module.exports = {
             },
             icons: [
                 {
+                    "src": "images/icons/maskable_icon.png",
+                    "sizes": "196x196",
+                    "type": "image/png",
+                    "purpose": "maskable"
+                },
+                {
                     "src": "./images/icons/android-chrome-512x512.png",
                     "sizes": "512x512",
                     "type": "image/png",
