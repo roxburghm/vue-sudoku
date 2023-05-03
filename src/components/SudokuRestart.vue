@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-title class="headline">{{ title }}</v-card-title>
+        <v-card-title class="headline justify-center">{{ title }}</v-card-title>
         <v-card-text>
             <slot></slot>
             <v-list>

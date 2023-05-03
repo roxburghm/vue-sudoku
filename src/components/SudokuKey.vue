@@ -95,6 +95,12 @@ export default {
     color: var(--sudoku-cell-selected-text-color) !important;
 }
 
+.v-progress-circular.btn-complete {
+    background-color:  var(--sudoku-cell-locked-color);
+    border-radius: 50%;
+    color: var(--sudoku-cell-selected-text-color) !important;
+}
+
 .v-btn {
     /*background-color: var(--sudoku-cell-selected-color);*/
 }
