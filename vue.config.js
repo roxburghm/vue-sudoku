@@ -24,7 +24,7 @@ module.exports = {
             icons: [
                 {
                     "src": "images/icons/maskable_icon.png",
-                    "sizes": "196x196",
+                    "sizes": "256x256",
                     "type": "image/png",
                     "purpose": "maskable"
                 },
@@ -32,7 +32,7 @@ module.exports = {
                     "src": "./images/icons/android-chrome-512x512.png",
                     "sizes": "512x512",
                     "type": "image/png",
-                    "purpose": "any maskable"
+                    "purpose": "any"
                 },
                 {
                     "src": "./images/icons/apple-touch-icon-60x60.png",
