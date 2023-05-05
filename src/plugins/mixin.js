@@ -1,3 +1,4 @@
+
 export default {
     methods: {
         toggleCellGuessOrNote(cellIndex, guess) {
@@ -30,6 +31,10 @@ export default {
             this.$store.commit('toggleCellGuess', {cellIndex: cellIndex, guess: guess});
             this.$store.dispatch('autoTrimNotes', {cellIndex, guess});
             this.$store.dispatch('saveGame');
+        },
+        secondsToMMSS(seconds) {
+            return Math.floor(seconds / 60) + ':' + (seconds % 60).toString().padStart(2, '0');
+
         }
     },
     computed: {

@@ -9,31 +9,21 @@
         </div>
         <v-container v-else class="text-center">
             <v-chip outlined color="grey" class="my-4" small>Difficulty:
-                <span class="text-capitalize">{{ level }}</span> &mdash; {{  elapsed  }}
+                <span class="text-capitalize">{{ level }}</span> &mdash; {{ elapsed }}
             </v-chip>
             <sudoku-grid/>
             <sudoku-keypad @difficulty="difficultySelect"/>
         </v-container>
-        <v-dialog v-model="finished" max-width="500" persistent>
-            <SudokuRestart @difficulty="difficultySelect" title="Congratulations!" :cancellable="false">
-                <div class="text-center">
-                    <v-icon color="secondary" size="128">mdi-cupcake</v-icon>
-                    <p>You have solved the puzzle. Select a difficulty level to try again</p>
-                </div>
-            </SudokuRestart>
-        </v-dialog>
     </div>
 </template>
 
 <script>
 import SudokuGrid from "@/components/SudokuGrid.vue";
 import SudokuKeypad from "@/components/SudokuKeypad.vue";
-import SudokuRestart from "@/components/SudokuRestart.vue";
 
 export default {
     name: 'GameView',
     components: {
-        SudokuRestart,
         SudokuKeypad,
         SudokuGrid
     },
@@ -44,7 +34,11 @@ export default {
     },
     mounted() {
         if (!this.ready) {
-            this.$store.dispatch('loadGame', 1);
+            if (this.$store.state.finished) {
+                this.difficultySelect(this.level);
+            } else {
+                this.$store.dispatch('loadGame', 1);
+            }
         }
         document.addEventListener('visibilitychange', this.handleVisibilityChange);
         this.startTimer();
@@ -55,13 +49,39 @@ export default {
     },
     watch: {
         solved: {
-            handler: function (val) {
-                this.finished = val;
+            handler: function (solved) {
+                if (!this.$store.state.finished) {
+                    if (solved) {
+                        this.checkHighScore(this.level, this.$store.state.secondsTaken)
+                        this.$store.commit('ready', false);
+                        this.$store.commit('finished', true);
+                        this.$router.replace({ name: 'HighScores' });
+                    }
+                }
             },
             immediate: true
         },
     },
     methods: {
+        checkHighScore(level, time) {
+            const highScores = this.$store.state.highScores[level];
+            const gameId = this.$store.state.gameId;
+            console.log('hs', this.$store.state.highScores, level);
+            const slowestTime =
+                highScores.length == 0 ? 99999 :
+                    highScores[highScores.length - 1].time;
+
+            console.log(time, slowestTime);
+            if (time < slowestTime) {
+
+                const newScore = { time: time, when: new Date().getTime(), gameId: gameId }
+                this.$store.commit('addHighScore',
+                    {level: level, score: newScore});
+                return true;
+            } else {
+                return false;
+            }
+        },
         handleVisibilityChange() {
             if (document.hidden) {
                 this.stopTimer()
@@ -72,7 +92,7 @@ export default {
         startTimer() {
             this.stopTimer();
             this.intervalTimer = setInterval(() => {
-                this.$store.commit('secondsTakenInc');
+                if (!this.$store.state.finished) this.$store.commit('secondsTakenInc');
             }, 1000);
         },
         stopTimer() {
@@ -83,7 +103,6 @@ export default {
         },
         difficultySelect(difficulty) {
             this.$store.commit('ready', false);
-            this.finished = false;
             setTimeout(() => {
                 this.$store.dispatch('newPuzzle', difficulty);
             }, 200);
@@ -91,7 +110,7 @@ export default {
     },
     computed: {
         elapsed() {
-            return Math.floor(this.$store.state.secondsTaken / 60) + ':' + (this.$store.state.secondsTaken % 60).toString().padStart(2, '0');
+            return this.secondsToMMSS(this.$store.state.secondsTaken);
         }
     }
 }

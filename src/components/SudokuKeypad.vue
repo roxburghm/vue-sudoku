@@ -19,7 +19,7 @@
         <v-divider class="my-4" />
         <div class="d-flex flex-row justify-center">
             <sudoku-key :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" :selected="isValidationOn" @click="toggleValidation" icon="mdi-check" :shortcut="['ctrl', 'v']"/>
-            <sudoku-key color="gray" :small="isSmallButton" @click="autoNotes" icon="mdi-dots-grid" :shortcut="['ctrl', 'alt', 'n']"/>
+            <sudoku-key color="gray" :small="isSmallButton" @click="autoNotes" @clickx="autoNotes" icon="mdi-dots-grid" :shortcut="['ctrl', 'alt', 'n']"/>
             <sudoku-key color="gray" :small="isSmallButton" @click="isRestartVisible = true" icon="mdi-refresh" :shortcut="['ctrl', 'alt', 'r']" />
             <sudoku-key color="gray" :small="isSmallButton" :disabled="historyLength === 0" @click="undo" icon="mdi-undo" :shortcut="['ctrl', 'z']"/>
             <sudoku-key :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" @click="toggleNotesMode" :selected="isNotesMode" icon="mdi-pencil" :shortcut="['n']"/>
@@ -88,6 +88,9 @@ export default {
             this.$store.commit('pushGameHistory');
             this.$store.dispatch('autoNotes');
             this.$store.dispatch('saveGame');
+        },
+        autoPass() {
+            this.$store.dispatch('autoPass');
         },
         toggleNotesMode() {
             this.isNotesMode = !this.isNotesMode;

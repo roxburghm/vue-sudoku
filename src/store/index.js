@@ -11,6 +11,24 @@ const PUZZLEHELPER = new SudokuGrid(SudokuLevels.EMPTY);
 const LS_SUDOKU_SECONDS_TAKEN = 'SudokuSecondsTaken';
 const LS_SUDOKU_STATE = 'SudokuState';
 const LS_SUDOKU_HISTORY = 'SudokuHistory';
+const LS_SUDOKU_LEVEL = 'SudokuLevel';
+const NO_OF_HIGH_SCORES = 10;
+const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
+
+function _getHighScoresFromLS() {
+    const highScoreString = localStorage.getItem(LS_SUDOKU_HIGH_SCORES);
+    const highScores = JSON.parse(highScoreString)
+
+    if (highScores === null) {
+        return {easy: [], medium: [], hard: []};
+
+    }
+    return highScores;
+}
+
+function _saveHighScoresToLS(highScores) {
+    localStorage.setItem(LS_SUDOKU_HIGH_SCORES, JSON.stringify(highScores));
+}
 
 function _getSecondsTakenFromLS() {
     return parseInt(localStorage.getItem(LS_SUDOKU_SECONDS_TAKEN)) || 0;
@@ -18,6 +36,13 @@ function _getSecondsTakenFromLS() {
 
 function _setSecondsTakenToLS(seconds) {
     localStorage.setItem(LS_SUDOKU_SECONDS_TAKEN, seconds);
+}
+function _getLevelFromLS() {
+    return localStorage.getItem(LS_SUDOKU_LEVEL) || SudokuLevels.EASY;
+}
+
+function _setLevelToLS(level) {
+    localStorage.setItem(LS_SUDOKU_LEVEL, level);
 }
 
 function puzzleChanged({state, commit}) {
@@ -38,8 +63,10 @@ function countDigits(cells) {
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     state: {
-        cells: Array.apply(null, Array(81)).map(function () { return new SudokuCell('', false) }),
-        level: SudokuLevels.EASY,
+        cells: Array.apply(null, Array(81)).map(function () {
+            return new SudokuCell('', false)
+        }),
+        level: _getLevelFromLS(),
         secondsTaken: _getSecondsTakenFromLS(),
         validation: false,
         history: [],
@@ -48,9 +75,29 @@ export default new Vuex.Store({
         selectedCell: SudokuDigits.EMPTY,
         isNotesMode: false,
         digitCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        solved: false
+        solved: false,
+        finished: false,
+        highScore: false,
+        highScores: _getHighScoresFromLS(),
+        gameId: null
     },
     mutations: {
+        gameId(state, payload) {
+            state.gameId = payload;
+        },
+        finished(state, payload) {
+            state.finished = payload;
+        },
+        highScore(state, payload) {
+            state.highScore = payload;
+        },
+        addHighScore(state, payload) {
+            state.highScore = true;
+            state.highScores[payload.level].push(payload.score);
+            state.highScores[payload.level].sort((a, b) => a.time - b.time);
+            state.highScores[payload.level].splice(NO_OF_HIGH_SCORES);
+            _saveHighScoresToLS(state.highScores);
+        },
         cells(state, payload) {
             state.cells = payload
         },
@@ -62,6 +109,7 @@ export default new Vuex.Store({
         },
         level(state, payload) {
             state.level = payload
+            _setLevelToLS(state.level)
         },
         secondsTaken(state, payload) {
             state.secondsTaken = payload
@@ -144,10 +192,16 @@ export default new Vuex.Store({
             }
         },
 
-        autoNotes({state, commit }) {
+        autoNotes({state, commit}) {
             for (let cellIdx in state.cells) {
                 const notes = PUZZLEHELPER.getAutoNotes(state.cells, cellIdx)
                 commit('setCellNotes', {cellIndex: cellIdx, notes: notes})
+            }
+        },
+        autoPass({state, commit}) {
+            console.log('auto pass');
+            for (let cellIdx in state.cells) {
+                commit('setCellGuess', {cellIndex: cellIdx, guess: state.cells[cellIdx].actual})
             }
         },
         autoTrimNotes({state, commit}, {cellIndex, guess}) {
@@ -160,10 +214,13 @@ export default new Vuex.Store({
         },
 
         newPuzzle({commit, dispatch}, level) {
+            commit('gameId', new Date().getTime())
             commit('cells', PUZZLEHELPER.generatePuzzleForLevel(level));
             commit('ready', false);
             commit('level', level);
             commit('history', []);
+            commit('finished', false);
+            commit('highScore', false);
             commit('selectedDigit', SudokuDigits.EMPTY);
             commit('selectedCell', SudokuDigits.EMPTY);
             commit('secondsTaken', 0);

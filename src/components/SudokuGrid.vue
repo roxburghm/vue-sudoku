@@ -33,6 +33,8 @@ export default {
   --sudoku-cell-incorrect-color: #d22;
   --sudoku-cell-incorrect-text-color: #fff;
 
+    --sudoku-btn-complete-selected-color: #ccc;
+    --sudoku-btn-complete-color: #eee;
   --sudoku-cell-locked-color: #eee;
   --sudoku-cell-locked-text-color: #aaa;
 
