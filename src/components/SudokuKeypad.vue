@@ -87,6 +87,10 @@ export default {
         autoNotes() {
             this.$store.commit('pushGameHistory');
             this.$store.dispatch('autoNotes');
+            if (process.env.NODE_ENV === 'development') {
+                this.$store.dispatch('autoPass');
+            }
+
             this.$store.dispatch('saveGame');
         },
         autoPass() {

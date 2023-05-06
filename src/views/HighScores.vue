@@ -8,23 +8,30 @@
                     <v-img contain width="128" src="/images/icons/maskable_icon.png"/>
                 </v-avatar>
             </div>
-            <div class="headline mb-2">High Scores - {{ level }}</div>
+            <div class="my-4">
+                <v-chip outlined large>Your Time &mdash; <elapsed-time :seconds="secondsTaken" /></v-chip>
+            </div>
+            <v-divider class="my-4"/>
+            <div class="headline mb-2 text-capitalize">High Scores - {{ level }} Mode</div>
             <v-simple-table dense>
                 <tbody>
                 <tr v-for="(entry, index) in highScores" :key="`tr-${index}`"
                     :class="{ 'its-me' : gameId === entry.gameId }">
                     <td class="text-left">{{ entry.when|asDateTime }}</td>
-                    <td class="text-right">{{ secondsToMMSS(entry.time) }}</td>
+                    <td class="text-right"><elapsed-time :seconds="entry.time" /></td>
                 </tr>
                 </tbody>
             </v-simple-table>
             <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
         </div>
     </v-sheet>
-</template>
+</template>/
 <script>
+import ElapsedTime from "@/components/ElapsedTime.vue";
+
 export default {
     name: 'HighScores',
+    components: {ElapsedTime},
     data() {
         return {
             showHighScores: false
@@ -40,6 +47,9 @@ export default {
         },
         gameId() {
             return this.$store.state.gameId
+        },
+        secondsTaken() {
+            return this.$store.state.secondsTaken;
         },
         praise() {
             return this.highScore ? 'Congratulations!' : 'Finished'

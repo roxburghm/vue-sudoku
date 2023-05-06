@@ -88,6 +88,57 @@ export class SudokuGrid {
         return relatedCells;
     }
 
+    areReferencedCellsComplete(cells, cellList) {
+        for (let cell of cellList) {
+            if (cells[cell].guess === '') return false;
+        }
+        return true;
+    }
+
+    isCompleteRow(cells, cellIndex) {
+        let related = this.getRelatedCellsInRow(cellIndex)
+        return this.areReferencedCellsComplete(cells, related)
+    }
+    isCompleteColumn(cells, cellIndex) {
+        let related = this.getRelatedCellsInColumn(cellIndex)
+        return this.areReferencedCellsComplete(cells, related)
+    }
+
+    isCompleteBlock(cells, cellIndex) {
+        let related = this.getRelatedCellsInBlock(cellIndex)
+        return this.areReferencedCellsComplete(cells, related)
+    }
+
+    getRelatedCellsInBlock(cellIndex) {
+        const relatedCells = [];
+        const x = cellIndex % 9;
+        const y = Math.floor(cellIndex / 9);
+        const blockX = Math.floor(x / 3);
+        const blockY = Math.floor(y / 3);
+        for (let i = 0; i < 9; i++) {
+            relatedCells.push((blockX * 3) + ((blockY * 3) * 9) + (i % 3) + (Math.floor(i / 3) * 9));
+        }
+        return relatedCells;
+    }
+
+    getRelatedCellsInColumn(cellIndex) {
+        const relatedCells = [];
+        const y = Math.floor(cellIndex / 9);
+        for (let i = 0; i < 9; i++) {
+            relatedCells.push(i + (y * 9));
+        }
+        return relatedCells;
+    }
+
+    getRelatedCellsInRow(cellIndex) {
+        const relatedCells = [];
+        const x = cellIndex % 9;
+        for (let i = 0; i < 9; i++) {
+            relatedCells.push(x + (i * 9));
+        }
+        return relatedCells;
+    }
+
     getAutoNotes(cells, cellIndex) {
         if (cells[cellIndex].locked) return [false, false, false, false, false, false, false, false, false];
 

@@ -9,7 +9,8 @@
         </div>
         <v-container v-else class="text-center">
             <v-chip outlined color="grey" class="my-4" small>Difficulty:
-                <span class="text-capitalize">{{ level }}</span> &mdash; {{ elapsed }}
+                <span class="text-capitalize">{{ level }}</span> &mdash;
+                <elapsed-time :seconds="$store.state.secondsTaken" />
             </v-chip>
             <sudoku-grid/>
             <sudoku-keypad @difficulty="difficultySelect"/>
@@ -20,10 +21,12 @@
 <script>
 import SudokuGrid from "@/components/SudokuGrid.vue";
 import SudokuKeypad from "@/components/SudokuKeypad.vue";
+import ElapsedTime from "@/components/ElapsedTime.vue";
 
 export default {
     name: 'GameView',
     components: {
+        ElapsedTime,
         SudokuKeypad,
         SudokuGrid
     },
@@ -68,7 +71,7 @@ export default {
             const gameId = this.$store.state.gameId;
             console.log('hs', this.$store.state.highScores, level);
             const slowestTime =
-                highScores.length == 0 ? 99999 :
+                highScores.length === 0 ? 99999 :
                     highScores[highScores.length - 1].time;
 
             console.log(time, slowestTime);

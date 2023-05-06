@@ -1,3 +1,4 @@
+import {v4 as uuidv4} from 'uuid';
 import Vue from 'vue'
 import Vuex from 'vuex'
 // using this engine
@@ -12,6 +13,7 @@ const LS_SUDOKU_SECONDS_TAKEN = 'SudokuSecondsTaken';
 const LS_SUDOKU_STATE = 'SudokuState';
 const LS_SUDOKU_HISTORY = 'SudokuHistory';
 const LS_SUDOKU_LEVEL = 'SudokuLevel';
+const LS_SUDOKU_GAME_ID = 'SudokuGameId';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -26,6 +28,10 @@ function _getHighScoresFromLS() {
     return highScores;
 }
 
+function _alertCompleted() {
+    navigator.vibrate(200);
+}
+
 function _saveHighScoresToLS(highScores) {
     localStorage.setItem(LS_SUDOKU_HIGH_SCORES, JSON.stringify(highScores));
 }
@@ -37,12 +43,21 @@ function _getSecondsTakenFromLS() {
 function _setSecondsTakenToLS(seconds) {
     localStorage.setItem(LS_SUDOKU_SECONDS_TAKEN, seconds);
 }
+
 function _getLevelFromLS() {
     return localStorage.getItem(LS_SUDOKU_LEVEL) || SudokuLevels.EASY;
 }
 
 function _setLevelToLS(level) {
     localStorage.setItem(LS_SUDOKU_LEVEL, level);
+}
+
+function _getGameIdFromLS() {
+    return localStorage.getItem(LS_SUDOKU_GAME_ID) || uuidv4();
+}
+
+function _setGameIdToLS(gameId) {
+    localStorage.setItem(LS_SUDOKU_GAME_ID, gameId);
 }
 
 function puzzleChanged({state, commit}) {
@@ -79,11 +94,12 @@ export default new Vuex.Store({
         finished: false,
         highScore: false,
         highScores: _getHighScoresFromLS(),
-        gameId: null
+        gameId: _getGameIdFromLS()
     },
     mutations: {
         gameId(state, payload) {
             state.gameId = payload;
+            _setGameIdToLS(state.gameId)
         },
         finished(state, payload) {
             state.finished = payload;
@@ -149,6 +165,13 @@ export default new Vuex.Store({
         setCellGuess(state, {cellIndex, guess}) {
             state.cells[cellIndex].guess = guess === 0 ? '' : guess;
             puzzleChanged(this);
+            if (PUZZLEHELPER.isCompleteColumn(state.cells, cellIndex)
+                || PUZZLEHELPER.isCompleteBlock(state.cells, cellIndex)
+                || (PUZZLEHELPER.isCompleteRow(state.cells, cellIndex))
+                || (state.digitCounts[guess - 1] === 9))
+            {
+                _alertCompleted()
+            }
         },
         clearCellGuess(state, {cellIndex}) {
             state.cells[cellIndex].guess = '';
@@ -214,7 +237,7 @@ export default new Vuex.Store({
         },
 
         newPuzzle({commit, dispatch}, level) {
-            commit('gameId', new Date().getTime())
+            commit('gameId', uuidv4())
             commit('cells', PUZZLEHELPER.generatePuzzleForLevel(level));
             commit('ready', false);
             commit('level', level);
@@ -223,10 +246,11 @@ export default new Vuex.Store({
             commit('highScore', false);
             commit('selectedDigit', SudokuDigits.EMPTY);
             commit('selectedCell', SudokuDigits.EMPTY);
-            commit('secondsTaken', 0);
             puzzleChanged(this)
             commit('ready', true);
+            commit('secondsTaken', 0);
             dispatch('saveGame');
+            commit('secondsTaken', 0);
         },
         loadPuzzle({commit}, puzzleState) {
             commit('ready', false);
