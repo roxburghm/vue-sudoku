@@ -5,7 +5,7 @@
             <div class="my-6">
                 <v-icon v-if="highScore" color="pink darken-1" size="128">mdi-cupcake</v-icon>
                 <v-avatar v-else size="128">
-                    <v-img contain width="128" src="/images/icons/maskable_icon.png"/>
+                    <v-img contain width="128" :src="`/images/logoFor${theme}.png`"/>
                 </v-avatar>
             </div>
             <div class="my-4">

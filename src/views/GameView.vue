@@ -3,7 +3,7 @@
 
         <div v-if="!ready" class="fill-height align-center text-center justify-center d-flex flex-column">
             <div>
-                <v-img width="128" height="128" src="/images/icons/android-chrome-192x192.png"/>
+                <v-img width="128" height="128" :src="`/images/logoFor${theme}.png`"/>
             </div>
             <div class="headline font-weight-light mt-6">Generating ...</div>
         </div>

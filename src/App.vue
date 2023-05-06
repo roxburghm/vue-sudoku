@@ -2,7 +2,7 @@
     <v-app>
         <v-app-bar app :dark="$store.state.themeDark" light>
             <div class="d-flex align-center">
-                <v-img alt="Sudoku" class="shrink mr-2" contain src="/images/icons/android-chrome-192x192.png"
+                <v-img alt="Sudoku" class="shrink mr-2" contain :src="`/images/logoFor${theme}.png`"
                        transition="scale-transition" width="40"
                 />
                 Sudoku

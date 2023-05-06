@@ -1,4 +1,3 @@
-
 export default {
     methods: {
         toggleCellGuessOrNote(cellIndex, guess) {
@@ -38,6 +37,9 @@ export default {
         }
     },
     computed: {
+        theme() {
+            return this.$store.state.themeDark ? 'Dark' : 'Light';
+        },
         level() {
             return this.$store.state.level;
         },

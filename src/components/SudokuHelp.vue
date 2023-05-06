@@ -6,14 +6,14 @@
             <v-simple-table>
                 <tbody>
                 <SudokuHelpItem icon="mdi-help" title="Help" text="Shows this help"/>
-                <SudokuHelpItem icon="mdi-dots-grid" title="Auto Hints" text="Fills in all unguessed squares with the values that are not already in the row, column or block"/>
+                <SudokuHelpItem icon="mdi-dots-grid" title="Auto Hints" text="Fills in all empty squares with the values that are not already in the row, column or block"/>
                 <SudokuHelpItem icon="mdi-refresh" title="New Game" text="Asks for a new difficulty level and starts a new game "/>
                 <SudokuHelpItem icon="mdi-undo" title="Undo Move" text="Undoes the last guess or note edit"/>
                 <SudokuHelpItem icon="mdi-eraser" title="Eraser" text="Clears the selected cell"/>
                 </tbody>
             </v-simple-table>
             <v-divider class="my-4"/>
-            <p>Entry Hint: If you select a cell on the grid (highlighted blue) then can use the keypad to enter a guess or make notes into that call. Alteratively if you select a digit on the keypad
+            <p>Entry Hint: If you select a cell on the grid (highlighted blue) then can use the keypad to enter a guess or make notes into that call. Alternatively if you select a digit on the keypad
                 you can tap on the grid to enter that digit into the cells guess or notes fields.</p>
             <v-divider class="my-4"/>
             <p>Sudoku is also accessible via the keyboard. The following shortcuts are available:</p>
