@@ -30,12 +30,13 @@ export default {
 
 <style scoped>
 td {
-    width: calc(var(--sudoku-cell-size) * 0.2);
-    height: calc(var(--sudoku-cell-size) * 0.2);
+    line-height: calc(var(--sudoku-cell-size) * 0.24);
+    width: calc(var(--sudoku-cell-size) * 0.24);
+    height: calc(var(--sudoku-cell-size) * 0.24);
 }
 .highlight-note {
     background-color: var(--sudoku-cell-highlighted-color);
-    border-radius: 30%;
+    border-radius: 10%;
     color:white;
 }
 

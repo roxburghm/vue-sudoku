@@ -111,7 +111,6 @@ export default {
 
 <!--suppress CssUnusedSymbol -->
 <style scoped>
-
 .sudoku-cell {
     background-color: white;
     width: var(--sudoku-cell-size);
@@ -163,7 +162,7 @@ export default {
 }
 
 .cell-notes .sudoku-cell-indicator {
-    border-radius: 30%;
+    border-radius: 10%;
 }
 
 

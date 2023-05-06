@@ -9,7 +9,7 @@
         </div>
         <v-container v-else class="text-center">
             <v-chip outlined color="grey" class="my-4" small>Difficulty:
-                <span class="text-capitalize">{{ level }}</span> &mdash;
+                <span class="text-capitalize mx-1">{{ level }}</span> <span class="mx-1 grey--text text--lighten-2">&mdash;</span>
                 <elapsed-time :seconds="$store.state.secondsTaken" />
             </v-chip>
             <sudoku-grid/>

@@ -27,15 +27,20 @@
 
         <v-dialog persistent :value="updateExists" :timeout="-1" color="black" outlined rounded max-width="400">
             <v-card>
-            <v-card-text class="pa-8">
-            <div class="d-flex flex-column align-center">
-            <v-img contain width="128" src="/images/icons/android-chrome-192x192.png" class="my-4 d-inline-block"/>
-                <div class="text-h6 mb-4">An update to this app is available</div>
-                <v-btn color="black" class="white--text" @click="refreshApp">
-                Update
-            </v-btn>
-            </div>
-            </v-card-text>
+                <v-card-text class="pa-8">
+                    <div class="d-flex flex-column align-center">
+                <v-avatar size="128" >
+                        <v-img contain width="128" src="/images/icons/android-chrome-192x192.png"
+                               class="my-4 d-inline-block"/>
+                </v-avatar>
+                        <div class="text-h6 my-8 text-center font-weight-light">An update for this app is ready, click
+                            update below to get all the new features without losing your game progress
+                        </div>
+                        <v-btn color="black" class="white--text" @click="refreshApp">
+                            Update
+                        </v-btn>
+                    </div>
+                </v-card-text>
             </v-card>
         </v-dialog>
     </v-app>
@@ -45,6 +50,7 @@
 
 import SudokuHelp from "@/components/SudokuHelp.vue";
 import swmixin from "@/plugins/swmixin";
+
 export default {
     name: 'App',
     mixins: [swmixin],
@@ -58,6 +64,6 @@ export default {
 
 <style>
 body {
-  user-select: none;
+    user-select: none;
 }
 </style>

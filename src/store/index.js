@@ -165,11 +165,7 @@ export default new Vuex.Store({
         setCellGuess(state, {cellIndex, guess}) {
             state.cells[cellIndex].guess = guess === 0 ? '' : guess;
             puzzleChanged(this);
-            if (PUZZLEHELPER.isCompleteColumn(state.cells, cellIndex)
-                || PUZZLEHELPER.isCompleteBlock(state.cells, cellIndex)
-                || (PUZZLEHELPER.isCompleteRow(state.cells, cellIndex))
-                || (state.digitCounts[guess - 1] === 9))
-            {
+            if (state.digitCounts[guess - 1] === 9) {
                 _alertCompleted()
             }
         },
