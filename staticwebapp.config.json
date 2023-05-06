@@ -1,0 +1,15 @@
+{
+  "globalHeaders": {
+    "content-security-policy": "img-src * 'self' data: https:; default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/images/*.{png,jpg,gif,webp}",
+      "/*.png"
+    ]
+  },
+  "mimeTypes": {
+    "custom": "text/html"
+  }
+}
