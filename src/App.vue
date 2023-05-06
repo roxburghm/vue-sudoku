@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-app-bar app color="white" light>
+        <v-app-bar app :dark="$store.state.themeDark" light>
             <div class="d-flex align-center">
                 <v-img alt="Sudoku" class="shrink mr-2" contain src="/images/icons/android-chrome-192x192.png"
                        transition="scale-transition" width="40"
@@ -11,6 +11,10 @@
 
             <v-spacer></v-spacer>
 
+            <v-btn icon @click="swapTheme" large
+                   v-shortkey="{t: ['t']}" @shortkey="swapTheme">
+                <v-icon>mdi-theme-light-dark</v-icon>
+            </v-btn>
             <v-btn icon @click="isHelpVisible = true" large
                    v-shortkey="{q: ['?'], shiftQ: ['shift', '?'], slash: ['/']}" @shortkey="isHelpVisible = true">
                 <v-icon>mdi-help-circle-outline</v-icon>
@@ -55,10 +59,19 @@ export default {
     name: 'App',
     mixins: [swmixin],
     components: {SudokuHelp},
-
+    mounted() {
+        this.$vuetify.theme.dark = this.$store.state.themeDark;
+        console.log('Mounted Set theme to ', this.$store.state.themeDark)
+    },
     data: () => ({
         isHelpVisible: false,
     }),
+    methods: {
+        swapTheme() {
+            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+            this.$store.commit('themeDark', this.$vuetify.theme.dark);
+        }
+    }
 };
 </script>
 
@@ -66,4 +79,5 @@ export default {
 body {
     user-select: none;
 }
+
 </style>

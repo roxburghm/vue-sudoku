@@ -24,22 +24,6 @@ export default {
 @import '~vuetify/src/styles/settings/_variables';
 
 :root {
-  --sudoku-cell-selected-color: #20a8e7;
-  --sudoku-cell-selected-text-color: #fff;
-
-  --sudoku-cell-highlighted-color: #888;
-  --sudoku-cell-highlighted-text-color: #888;
-
-  --sudoku-cell-incorrect-color: #d22;
-  --sudoku-cell-incorrect-text-color: #fff;
-
-    --sudoku-btn-complete-selected-color: #ccc;
-    --sudoku-btn-complete-color: #eee;
-  --sudoku-cell-locked-color: #eee;
-  --sudoku-cell-locked-text-color: #aaa;
-
-
-  --sudoku-cell-text-color: #aaa;
 
   --sudoku-cell-size: 50px;
   --sudouku-block-border: 4px;

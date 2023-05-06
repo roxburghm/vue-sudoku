@@ -84,24 +84,24 @@ export default {
 <style scoped>
 
 .v-progress-circular.btn-selected {
-    background-color:  var(--sudoku-cell-selected-color);
+    background-color:  var(--v-sudoku-cell-selected-color-base);
     border-radius: 50%;
-    color: var(--sudoku-cell-selected-text-color) !important;
+    color: var(--v-sudoku-cell-selected-text-color-base) !important;
 }
 
 .v-progress-circular.btn-selected.btn-complete {
-    background-color:  var(--sudoku-btn-complete-selected-color);
+    background-color:  var(--v-sudoku-btn-complete-selected-color-base);
     border-radius: 50%;
-    color: var(--sudoku-cell-selected-text-color) !important;
+    color: var(--v-sudoku-cell-selected-text-color-base) !important;
 }
 
 .v-progress-circular.btn-complete {
-    background-color:  var(--sudoku-btn-complete-color);
+    background-color:  var(--v-sudoku-btn-complete-color-base);
     border-radius: 50%;
-    color: var(--sudoku-cell-selected-text-color) !important;
+    color: var(--v-sudoku-cell-selected-text-color-base) !important;
 }
 
 .v-btn {
-    /*background-color: var(--sudoku-cell-selected-color);*/
+    /*background-color: var(--v-sudoku-cell-selected-color-base);*/
 }
 </style>

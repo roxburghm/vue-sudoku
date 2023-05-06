@@ -14,6 +14,7 @@ const LS_SUDOKU_STATE = 'SudokuState';
 const LS_SUDOKU_HISTORY = 'SudokuHistory';
 const LS_SUDOKU_LEVEL = 'SudokuLevel';
 const LS_SUDOKU_GAME_ID = 'SudokuGameId';
+const LS_SUDOKU_THEME_DARK = 'SudokuThemeDark';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -42,6 +43,14 @@ function _getSecondsTakenFromLS() {
 
 function _setSecondsTakenToLS(seconds) {
     localStorage.setItem(LS_SUDOKU_SECONDS_TAKEN, seconds);
+}
+
+function _getIsThemeDarkFromLS() {
+    return (parseInt(localStorage.getItem(LS_SUDOKU_THEME_DARK)) || 0) !== 0;
+}
+
+function _setIsThemeDarkToLS(isDark) {
+    localStorage.setItem(LS_SUDOKU_THEME_DARK, isDark ? '1' : '0');
 }
 
 function _getLevelFromLS() {
@@ -81,6 +90,7 @@ export default new Vuex.Store({
         cells: Array.apply(null, Array(81)).map(function () {
             return new SudokuCell('', false)
         }),
+        themeDark: _getIsThemeDarkFromLS(),
         level: _getLevelFromLS(),
         secondsTaken: _getSecondsTakenFromLS(),
         validation: false,
@@ -100,6 +110,11 @@ export default new Vuex.Store({
         gameId(state, payload) {
             state.gameId = payload;
             _setGameIdToLS(state.gameId)
+        },
+        themeDark(state, payload) {
+            console.log('themeDark', payload)
+            state.themeDark = payload;
+            _setIsThemeDarkToLS(state.themeDark)
         },
         finished(state, payload) {
             state.finished = payload;

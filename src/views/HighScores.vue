@@ -60,8 +60,8 @@ export default {
 </script>
 <style scoped>
 .its-me {
-    color: var(--sudoku-cell-selected-text-color);
-    background-color: var(--sudoku-cell-selected-color);
+    color: var(--v-sudoku-cell-selected-text-color-base);
+    background-color: var(--v-sudoku-cell-selected-color-base);
 }
 
 .placement {

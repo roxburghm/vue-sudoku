@@ -112,7 +112,7 @@ export default {
 <!--suppress CssUnusedSymbol -->
 <style scoped>
 .sudoku-cell {
-    background-color: white;
+    background-color: var(--v-sudoku-cell-color-base);
     width: var(--sudoku-cell-size);
     height: var(--sudoku-cell-size);
     overflow: hidden;
@@ -123,42 +123,42 @@ export default {
 }
 
 .sudoku-cell.cell-locked {
-    background-color: var(--sudoku-cell-locked-color);
+    background-color: var(--v-sudoku-cell-locked-color-base);
 }
 .sudoku-cell.cell-locked .sudoku-cell-indicator {
-    background-color: var(--sudoku-cell-locked-color);
+    background-color: var(--v-sudoku-cell-locked-color-base);
 }
 
 .sudoku-cell.cell-incorrect .sudoku-cell-indicator {
-    background-color: var(--sudoku-cell-incorrect-color);
+    background-color: var(--v-sudoku-cell-incorrect-color-base);
 }
 
 .sudoku-cell.cell-locked  {
-    color: var(--sudoku-cell-locked-text-color);
+    color: var(--v-sudoku-cell-locked-text-color-base);
 }
 
 .sudoku-cell.cell-incorrect  {
-    color: var(--sudoku-cell-incorrect-text-color);
+    color: var(--v-sudoku-cell-incorrect-text-color-base);
 }
 
 .sudoku-cell.cell-highlighted .sudoku-cell-indicator {
-    border: 2px solid var(--sudoku-cell-highlighted-color);
+    border: 2px solid var(--v-sudoku-cell-highlighted-color-base);
 }
 
 .sudoku-cell.cell-highlighted  {
-    color: var(--sudoku-cell-highlighted-text-color);
+    color: var(--v-sudoku-cell-highlighted-text-color-base);
 }
 
 
 .sudoku-cell.cell-selected .sudoku-cell-indicator {
-    background-color: var(--sudoku-cell-selected-color);
+    background-color: var(--v-sudoku-cell-selected-color-base);
 }
 .sudoku-cell.cell-selected {
-    color: var(--sudoku-cell-selected-text-color);
+    color: var(--v-sudoku-cell-selected-text-color-base);
 }
 
 .sudoku-cell  {
-    color: var(--sudoku-cell-text-color);
+    color: var(--v-sudoku-cell-text-color-base);
 }
 
 .cell-notes .sudoku-cell-indicator {
