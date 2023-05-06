@@ -67,23 +67,9 @@ export default {
     },
     methods: {
         checkHighScore(level, time) {
-            const highScores = this.$store.state.highScores[level];
-            const gameId = this.$store.state.gameId;
-            console.log('hs', this.$store.state.highScores, level);
-            const slowestTime =
-                highScores.length === 0 ? 99999 :
-                    highScores[highScores.length - 1].time;
-
-            console.log(time, slowestTime);
-            if (time < slowestTime) {
-
-                const newScore = { time: time, when: new Date().getTime(), gameId: gameId }
-                this.$store.commit('addHighScore',
-                    {level: level, score: newScore});
-                return true;
-            } else {
-                return false;
-            }
+            this.$store.commit('addHighScore',
+                {level: level, time: time});
+            return this.$store.state.highScore;
         },
         handleVisibilityChange() {
             if (document.hidden) {

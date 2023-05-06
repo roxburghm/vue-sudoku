@@ -9,7 +9,7 @@
                 </v-avatar>
             </div>
             <div class="my-4">
-                <v-chip outlined large>Your Time &mdash; <elapsed-time :seconds="secondsTaken" /></v-chip>
+                <v-chip outlined large class="px-6" color="black">Your Time <span class="mx-2 grey--text text--lighten-1">&mdash;</span><elapsed-time :seconds="secondsTaken" /></v-chip>
             </div>
             <v-divider class="my-4"/>
             <div class="headline mb-2 text-capitalize">High Scores - {{ level }} Mode</div>
@@ -17,6 +17,7 @@
                 <tbody>
                 <tr v-for="(entry, index) in highScores" :key="`tr-${index}`"
                     :class="{ 'its-me' : gameId === entry.gameId }">
+                    <td class="right placement grey--text">{{ index + 1 }}.</td>
                     <td class="text-left">{{ entry.when|asDateTime }}</td>
                     <td class="text-right"><elapsed-time :seconds="entry.time" /></td>
                 </tr>
@@ -61,5 +62,9 @@ export default {
 .its-me {
     color: var(--sudoku-cell-selected-text-color);
     background-color: var(--sudoku-cell-selected-color);
+}
+
+.placement {
+    width: 2em;
 }
 </style>

@@ -108,11 +108,24 @@ export default new Vuex.Store({
             state.highScore = payload;
         },
         addHighScore(state, payload) {
-            state.highScore = true;
-            state.highScores[payload.level].push(payload.score);
-            state.highScores[payload.level].sort((a, b) => a.time - b.time);
-            state.highScores[payload.level].splice(NO_OF_HIGH_SCORES);
-            _saveHighScoresToLS(state.highScores);
+
+            const time = payload.time;
+            const highScores = state.highScores[payload.level];
+            const gameId = state.gameId;
+            const slowestTime =
+                highScores.length === 0 ? 99999 :
+                    highScores[highScores.length - 1].time;
+
+            if (time < slowestTime || highScores.length < NO_OF_HIGH_SCORES) {
+                const newScore = { time: time, when: new Date().getTime(), gameId: gameId }
+                state.highScores[payload.level].push(newScore);
+                state.highScores[payload.level].sort((a, b) => a.time - b.time);
+                state.highScores[payload.level].splice(NO_OF_HIGH_SCORES);
+                _saveHighScoresToLS(state.highScores);
+                state.highScore = true;
+            } else {
+                state.highScore = false;
+            }
         },
         cells(state, payload) {
             state.cells = payload
