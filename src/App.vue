@@ -11,9 +11,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon @click="swapTheme" large
-                   v-shortkey="{t: ['t']}" @shortkey="swapTheme">
-                <v-icon>mdi-theme-light-dark</v-icon>
+            <v-btn icon :to="{ name: 'Settings' }" large>
+                <v-icon>mdi-cog</v-icon>
             </v-btn>
             <v-btn icon @click="isHelpVisible = true" large
                    v-shortkey="{q: ['?'], shiftQ: ['shift', '?'], slash: ['/']}" @shortkey="isHelpVisible = true">

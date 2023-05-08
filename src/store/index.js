@@ -1,6 +1,7 @@
 import {v4 as uuidv4} from 'uuid';
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 // using this engine
 Vue.use(Vuex)
 import {SudokuLevels, SudokuGrid, SudokuCell, SudokuDigits} from "@/plugins/sudoku";
@@ -15,6 +16,9 @@ const LS_SUDOKU_HISTORY = 'SudokuHistory';
 const LS_SUDOKU_LEVEL = 'SudokuLevel';
 const LS_SUDOKU_GAME_ID = 'SudokuGameId';
 const LS_SUDOKU_THEME_DARK = 'SudokuThemeDark';
+const LS_SUDOKU_ALLOW_VALIDATION = 'SudokuAllowValidation';
+const LS_SUDOKU_ALLOW_AUTO_NOTES = 'SudokuAllowAutoNotes';
+const LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE = 'SudokuVibrateOnDigitComplete';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -30,7 +34,7 @@ function _getHighScoresFromLS() {
 }
 
 function _alertCompleted() {
-    navigator.vibrate(200);
+    navigator.vibrate(100);
 }
 
 function _saveHighScoresToLS(highScores) {
@@ -45,12 +49,16 @@ function _setSecondsTakenToLS(seconds) {
     localStorage.setItem(LS_SUDOKU_SECONDS_TAKEN, seconds);
 }
 
-function _getIsThemeDarkFromLS() {
-    return (parseInt(localStorage.getItem(LS_SUDOKU_THEME_DARK)) || 0) !== 0;
+function _getBooleanFromLS(key, defaultValue) {
+    let val = localStorage.getItem(key);
+    if (val === null) {
+        return defaultValue;
+    }
+    return val !=='0';
 }
 
-function _setIsThemeDarkToLS(isDark) {
-    localStorage.setItem(LS_SUDOKU_THEME_DARK, isDark ? '1' : '0');
+function _setBooleanToLS(key, value) {
+    localStorage.setItem(key, value ? '1' : '0');
 }
 
 function _getLevelFromLS() {
@@ -90,7 +98,7 @@ export default new Vuex.Store({
         cells: Array.apply(null, Array(81)).map(function () {
             return new SudokuCell('', false)
         }),
-        themeDark: _getIsThemeDarkFromLS(),
+        themeDark: _getBooleanFromLS(LS_SUDOKU_THEME_DARK, false),
         level: _getLevelFromLS(),
         secondsTaken: _getSecondsTakenFromLS(),
         validation: false,
@@ -104,9 +112,24 @@ export default new Vuex.Store({
         finished: false,
         highScore: false,
         highScores: _getHighScoresFromLS(),
-        gameId: _getGameIdFromLS()
+        gameId: _getGameIdFromLS(),
+        allowAutoNotes: _getBooleanFromLS(LS_SUDOKU_ALLOW_AUTO_NOTES, true),
+        allowValidation: _getBooleanFromLS(LS_SUDOKU_ALLOW_VALIDATION, true),
+        vibrateOnDigitComplete: _getBooleanFromLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, true),
     },
     mutations: {
+        vibrateOnDigitComplete(state, payload) {
+            state.vibrateOnDigitComplete = payload;
+            _setBooleanToLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, state.vibrateOnDigitComplete)
+        },
+        allowAutoNotes(state, payload) {
+            state.allowAutoNotes = payload;
+            _setBooleanToLS(LS_SUDOKU_ALLOW_AUTO_NOTES, state.allowAutoNotes)
+        },
+        allowValidation(state, payload) {
+            state.allowValidation = payload;
+            _setBooleanToLS(LS_SUDOKU_ALLOW_VALIDATION, state.allowValidation)
+        },
         gameId(state, payload) {
             state.gameId = payload;
             _setGameIdToLS(state.gameId)
@@ -114,7 +137,7 @@ export default new Vuex.Store({
         themeDark(state, payload) {
             console.log('themeDark', payload)
             state.themeDark = payload;
-            _setIsThemeDarkToLS(state.themeDark)
+            _setBooleanToLS(LS_SUDOKU_THEME_DARK, state.themeDark)
         },
         finished(state, payload) {
             state.finished = payload;
@@ -193,7 +216,7 @@ export default new Vuex.Store({
         setCellGuess(state, {cellIndex, guess}) {
             state.cells[cellIndex].guess = guess === 0 ? '' : guess;
             puzzleChanged(this);
-            if (state.digitCounts[guess - 1] === 9) {
+            if (state.vibrateOnDigitComplete && state.digitCounts[guess - 1] === 9) {
                 _alertCompleted()
             }
         },

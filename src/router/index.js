@@ -11,6 +11,11 @@ const routes = [
     component: GameView
   },
   {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Settings.vue')
+  },
+  {
     path: '/highscores',
     name: 'HighScores',
     component: () => import(/* webpackChunkName: "about" */ '../views/HighScores.vue')

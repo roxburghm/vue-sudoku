@@ -18,8 +18,12 @@
         </div>
         <v-divider class="my-4" />
         <div class="d-flex flex-row justify-center">
-            <sudoku-key :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" :selected="isValidationOn" @click="toggleValidation" icon="mdi-check" :shortcut="['ctrl', 'v']"/>
-            <sudoku-key color="gray" :small="isSmallButton" @click="autoNotes" @clickx="autoNotes" icon="mdi-dots-grid" :shortcut="['ctrl', 'alt', 'n']"/>
+            <sudoku-key
+                    v-if="allowValidation"
+                    :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" :selected="isValidationOn" @click="toggleValidation" icon="mdi-check" :shortcut="['ctrl', 'v']"/>
+            <sudoku-key
+                    v-if="allowAutoNotes"
+                    color="gray" :small="isSmallButton" @click="autoNotes" @clickx="autoNotes" icon="mdi-dots-grid" :shortcut="['ctrl', 'alt', 'n']"/>
             <sudoku-key color="gray" :small="isSmallButton" @click="isRestartVisible = true" icon="mdi-refresh" :shortcut="['ctrl', 'alt', 'r']" />
             <sudoku-key color="gray" :small="isSmallButton" :disabled="historyLength === 0" @click="undo" icon="mdi-undo" :shortcut="['ctrl', 'z']"/>
             <sudoku-key :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" @click="toggleNotesMode" :selected="isNotesMode" icon="mdi-pencil" :shortcut="['n']"/>
@@ -111,9 +115,14 @@ export default {
     computed: {
         isSmallButton() {
             return this.$vuetify.breakpoint.smAndDown;
-        }
+        },
+        allowValidation() {
+            return this.$store.state.allowValidation;
+        },
+        allowAutoNotes() {
+            return this.$store.state.allowAutoNotes;
+        },
     }
-
 }
 </script>
 

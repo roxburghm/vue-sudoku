@@ -13,6 +13,7 @@ export default new Vuetify({
                 primary: '#aaa',
                 secondary: '#c8e2ee',
                 black: '#333333',
+                sudoku: '#4dc2f8',
                 'sudoku-cell-selected-color': '#20a8e7',
                 'sudoku-cell-selected-text-color': '#fff',
                 'sudoku-cell-highlighted-color': '#888',
@@ -27,9 +28,10 @@ export default new Vuetify({
                 'sudoku-cell-color': '#fff',
             },
             dark: {
-                primary: '#f00',
+                primary: '#666',
                 secondary: '#85969d',
                 black: '#ffffff',
+                sudoku: '#4dc2f8',
                 'sudoku-cell-selected-color': '#20a8e7',
                 'sudoku-cell-selected-text-color': '#000',
 
