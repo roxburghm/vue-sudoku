@@ -11,7 +11,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4" >
+            <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4">
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
             <v-btn icon @click="isHelpVisible = true" large
@@ -32,10 +32,13 @@
             <v-card>
                 <v-card-text class="pa-8">
                     <div class="d-flex flex-column align-center">
-                <v-avatar size="128" >
-                        <v-img contain width="128" src="/images/icons/android-chrome-192x192.png"
-                               class="my-4 d-inline-block"/>
-                </v-avatar>
+                        <div class="new-container">
+                            <v-avatar size="128">
+                                <v-img contain width="128" src="/images/icons/android-chrome-192x192.png"
+                                       class="my-4 d-inline-block"/>
+                            </v-avatar>
+                            <v-icon x-large class="rounded  white new-icon" color="yellow">mdi-new-box</v-icon>
+                        </div>
                         <div class="text-h6 my-8 text-center font-weight-light">An update for this app is ready, click
                             update below to get all the new features without losing your game progress
                         </div>
@@ -77,6 +80,18 @@ export default {
 <style>
 body {
     user-select: none;
+}
+
+.new-container {
+    position: relative;
+    width: 128px;
+    height: 128px;
+}
+
+.new-icon {
+    position: absolute !important;
+    right: 0;
+    bottom: 0;
 }
 
 </style>
