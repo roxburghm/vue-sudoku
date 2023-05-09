@@ -11,4 +11,5 @@
     --v-sudoku-cell-locked-text-color-base: '#000';
     --v-sudoku-cell-text-color-base: '#000';
     --v-sudoku-cell-color-base: '#000';
+    --v-sudoku-cell-single-note-color-base: '#000';
 }

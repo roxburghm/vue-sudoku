@@ -100,7 +100,7 @@ export default {
             return this.cell.actual
         },
         noteCount() {
-            return this.cell.notes.reduce((acc, note) => acc + note ? 1 : 0, 0);
+            return this.cell.notes.reduce((acc, note) => acc + (note ? 1 : 0), 0);
         },
         hasNotes() {
             return this.cell.notes.reduce((acc, note) => acc || note, false);

@@ -40,7 +40,6 @@ export default {
     },
     computed: {
         highScores() {
-            console.log(this.level, this.$store.state.highScores)
             return this.$store.state.highScores[this.level]
         },
         highScore() {

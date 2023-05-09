@@ -17,6 +17,8 @@ const LS_SUDOKU_LEVEL = 'SudokuLevel';
 const LS_SUDOKU_GAME_ID = 'SudokuGameId';
 const LS_SUDOKU_THEME_DARK = 'SudokuThemeDark';
 const LS_SUDOKU_ALLOW_VALIDATION = 'SudokuAllowValidation';
+const LS_SUDOKU_FINISHED = 'SudokuFinished';
+const LS_SUDOKU_HIGH_SCORE = 'SudokuHighScore';
 const LS_SUDOKU_ALLOW_AUTO_NOTES = 'SudokuAllowAutoNotes';
 const LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE = 'SudokuVibrateOnDigitComplete';
 const LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE = 'SudokuHighlightSingleNote';
@@ -110,10 +112,10 @@ export default new Vuex.Store({
         isNotesMode: false,
         digitCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0],
         solved: false,
-        finished: false,
-        highScore: false,
         highScores: _getHighScoresFromLS(),
         gameId: _getGameIdFromLS(),
+        finished: _getBooleanFromLS(LS_SUDOKU_FINISHED, false),
+        highScore: _getBooleanFromLS(LS_SUDOKU_HIGH_SCORE, false),
         allowAutoNotes: _getBooleanFromLS(LS_SUDOKU_ALLOW_AUTO_NOTES, true),
         allowValidation: _getBooleanFromLS(LS_SUDOKU_ALLOW_VALIDATION, true),
         vibrateOnDigitComplete: _getBooleanFromLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, true),
@@ -147,9 +149,11 @@ export default new Vuex.Store({
         },
         finished(state, payload) {
             state.finished = payload;
+            _setBooleanToLS(LS_SUDOKU_FINISHED, state.finished)
         },
         highScore(state, payload) {
             state.highScore = payload;
+            _setBooleanToLS(LS_SUDOKU_HIGH_SCORE, state.highScore)
         },
         addHighScore(state, payload) {
 
