@@ -26,6 +26,7 @@ export default new Vuetify({
                 'sudoku-cell-locked-text-color': '#aaa',
                 'sudoku-cell-text-color': '#aaa',
                 'sudoku-cell-color': '#fff',
+                'sudoku-cell-single-note-color': '#fdfde8'
             },
             dark: {
                 primary: '#666',
@@ -49,6 +50,7 @@ export default new Vuetify({
 
                 'sudoku-cell-color': '#333',
                 'sudoku-cell-text-color': '#aaa',
+                'sudoku-cell-single-note-color': '#65654c'
             }
         },
     },

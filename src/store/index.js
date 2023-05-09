@@ -19,6 +19,7 @@ const LS_SUDOKU_THEME_DARK = 'SudokuThemeDark';
 const LS_SUDOKU_ALLOW_VALIDATION = 'SudokuAllowValidation';
 const LS_SUDOKU_ALLOW_AUTO_NOTES = 'SudokuAllowAutoNotes';
 const LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE = 'SudokuVibrateOnDigitComplete';
+const LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE = 'SudokuHighlightSingleNote';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -116,8 +117,13 @@ export default new Vuex.Store({
         allowAutoNotes: _getBooleanFromLS(LS_SUDOKU_ALLOW_AUTO_NOTES, true),
         allowValidation: _getBooleanFromLS(LS_SUDOKU_ALLOW_VALIDATION, true),
         vibrateOnDigitComplete: _getBooleanFromLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, true),
+        highlightSingleNote: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
     },
     mutations: {
+        highlightSingleNote(state, payload) {
+            state.highlightSingleNote = payload;
+            _setBooleanToLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, state.highlightSingleNote)
+        },
         vibrateOnDigitComplete(state, payload) {
             state.vibrateOnDigitComplete = payload;
             _setBooleanToLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, state.vibrateOnDigitComplete)

@@ -68,6 +68,9 @@ export default {
             if (this.cellSelected) return 'cell-selected';
             if (this.cellHighlighted) return 'cell-highlighted';
             if (this.cellLocked) return 'cell-locked';
+            if (this.showNotes && this.noteCount === 1 && this.$store.state.highlightSingleNote) {
+                return 'cell-single-note';
+            }
             return '';
         },
         hasIndicator() {
@@ -95,6 +98,9 @@ export default {
         },
         cellActual() {
             return this.cell.actual
+        },
+        noteCount() {
+            return this.cell.notes.reduce((acc, note) => acc + note ? 1 : 0, 0);
         },
         hasNotes() {
             return this.cell.notes.reduce((acc, note) => acc || note, false);
@@ -165,6 +171,9 @@ export default {
     border-radius: 10%;
 }
 
+.cell-single-note .sudoku-notes {
+    background-color: var(--v-sudoku-cell-single-note-color-base);;
+}
 
 .sudoku-cell .sudoku-notes {
     font-weight: 600;

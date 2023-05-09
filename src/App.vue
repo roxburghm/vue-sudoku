@@ -11,7 +11,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon :to="{ name: 'Settings' }" large>
+            <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4" >
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
             <v-btn icon @click="isHelpVisible = true" large

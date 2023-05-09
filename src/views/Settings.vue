@@ -2,60 +2,41 @@
     <v-container class="justify-center d-flex">
 
         <v-sheet max-width="600">
-            <div class="headline">
+            <div class="headline mb-8">
                 <v-btn class="mr-4" :to="{name: 'GameView'}" icon>
                     <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
                 Settings
             </div>
-            <v-row dense class="mt-8">
-                <v-col cols="8" class="text-left align-center d-flex">
-                    <v-icon left>mdi-theme-light-dark</v-icon>
-                    Dark Theme
-                </v-col>
-                <v-col class="text-right justify-end d-flex">
-                    <v-switch color="sudoku" v-model="darkTheme"/>
-                </v-col>
-                <v-col cols="12">
-                    <v-divider/>
-                </v-col>
-                <v-col cols="8" class="text-left align-center d-flex">
-                    <v-icon left>mdi-check</v-icon>
-                    Allow validation
-                </v-col>
-                <v-col class="text-right justify-end d-flex">
-                    <v-switch color="sudoku" v-model="allowValidation"/>
-                </v-col>
+            <SettingItem icon="mdi-theme-light-dark" label="Dark theme">
+                <v-switch color="sudoku" v-model="darkTheme"/>
+            </SettingItem>
 
-                <v-col cols="12">
-                    <v-divider/>
-                </v-col>
-                <v-col cols="8" class="text-left align-center d-flex">
-                    <v-icon left>mdi-dots-grid</v-icon>
-                    Allow automatic notes
-                </v-col>
-                <v-col class="text-right justify-end d-flex">
-                    <v-switch color="sudoku" v-model="allowAutoNotes"/>
-                </v-col>
+            <SettingItem icon="mdi-check" label="Allow validation">
+                <v-switch color="sudoku" v-model="allowValidation"/>
+            </SettingItem>
 
-                <v-col cols="12">
-                    <v-divider/>
-                </v-col>
-                <v-col cols="8" class="text-left align-center d-flex">
-                    <v-icon left>mdi-vibrate</v-icon>
-                    Vibrate on digit complete
-                </v-col>
-                <v-col class="text-right justify-end d-flex">
-                    <v-switch color="sudoku" v-model="vibrateOnDigitComplete"/>
-                </v-col>
-            </v-row>
+            <SettingItem icon="mdi-dots-grid" label="Allow automatic notes">
+                <v-switch color="sudoku" v-model="allowAutoNotes"/>
+            </SettingItem>
+
+            <SettingItem icon="mdi-vibrate" label="Vibrate on digit complete">
+                <v-switch color="sudoku" v-model="vibrateOnDigitComplete"/>
+            </SettingItem>
+
+            <SettingItem icon="mdi-marker" label="Highlight notes containing single value">
+                <v-switch color="sudoku" v-model="highlightSingleNote"/>
+            </SettingItem>
         </v-sheet>
     </v-container>
 </template>/
 <script>
 
+import SettingItem from "@/views/SettingItem.vue";
+
 export default {
     name: 'HighScores',
+    components: {SettingItem},
     data() {
         return {
             showHighScores: false
@@ -94,9 +75,15 @@ export default {
             set(value) {
                 this.$store.commit('vibrateOnDigitComplete', value)
             }
+        },
+        highlightSingleNote: {
+            get() {
+                return this.$store.state.highlightSingleNote
+            },
+            set(value) {
+                this.$store.commit('highlightSingleNote', value)
+            }
         }
     }
 }
 </script>
-<style scoped>
-</style>
