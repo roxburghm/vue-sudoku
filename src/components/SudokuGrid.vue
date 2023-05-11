@@ -25,7 +25,7 @@ export default {
 
 :root {
 
-  --sudoku-cell-size: 50px;
+  --sudoku-cell-size:55px;
   --sudouku-block-border: 4px;
   --sudouku-cell-border: 1px;
   --sudouku-block-border-color: #20a8e7;
