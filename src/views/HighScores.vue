@@ -13,8 +13,8 @@
             </div>
             <v-divider class="my-4"/>
             <div class="headline mb-2 text-capitalize">High Scores - {{ level }} Mode</div>
-            <v-sheet max-width="600">
-            <v-simple-table dense>
+            
+            <v-simple-table dense style="max-width: 600px">
                 <tbody>
                 <tr v-for="(entry, index) in highScores" :key="`tr-${index}`"
                     :class="{ 'its-me' : gameId === entry.gameId }">
@@ -24,7 +24,6 @@
                 </tr>
                 </tbody>
             </v-simple-table>
-            </v-sheet>
             <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
         </div>
     </v-sheet>
