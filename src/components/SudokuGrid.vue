@@ -34,7 +34,7 @@ export default {
   --sudouku-grid-border-overhang: 8px;
 }
 
-@media #{map-get($display-breakpoints, 'xs')} {
+@media #{map-get($display-breakpoints, 'xs-only')} {
   :root {
     --sudoku-cell-size: 39px;
   }
