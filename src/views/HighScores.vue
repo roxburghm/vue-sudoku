@@ -17,7 +17,7 @@
                 <v-carousel-item v-for="hLevel in levels" :key="`level-${hLevel}`">
                     <v-sheet>
                     <div class="headline mb-2 text-capitalize">High Scores - {{ hLevel }} Mode</div>
-                    <v-simple-table dense style="max-width: 600px" class="mx-auto">
+                    <v-simple-table dense style="max-width: 500px" class="mx-auto">
                         <tbody>
                         <tr v-for="(entry, index) in getHighScoresForLevel(hLevel)" :key="`tr-${index}`"
                             :class="{ 'its-me' : gameId === entry.gameId }">
@@ -27,10 +27,11 @@
                         </tr>
                         </tbody>
                     </v-simple-table>
+ <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
                     </v-sheet>
                 </v-carousel-item>
             </v-carousel>
-            <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
+           
         </div>
     </v-sheet>
 </template>/
