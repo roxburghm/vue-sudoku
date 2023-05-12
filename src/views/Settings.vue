@@ -28,7 +28,7 @@
                 <v-switch color="sudoku" v-model="highlightSingleNote"/>
             </SettingItem>
 
-            <SettingItem icon="mdi-stopwatch" label="Show countdown bar">
+            <SettingItem icon="mdi-timer-outline" label="Show countdown bar">
                 <v-switch color="sudoku" v-model="showCountdown"/>
             </SettingItem>
         </v-sheet>
