@@ -10,6 +10,7 @@ const MAX_HISTORY = 20;
 
 const PUZZLEHELPER = new SudokuGrid(SudokuLevels.EMPTY);
 
+const LS_SUDOKU_SHOW_COUNTDOWN = 'SudokuShowCountdown';
 const LS_SUDOKU_SECONDS_TAKEN = 'SudokuSecondsTaken';
 const LS_SUDOKU_STATE = 'SudokuState';
 const LS_SUDOKU_HISTORY = 'SudokuHistory';
@@ -44,14 +45,6 @@ function _saveHighScoresToLS(highScores) {
     localStorage.setItem(LS_SUDOKU_HIGH_SCORES, JSON.stringify(highScores));
 }
 
-function _getSecondsTakenFromLS() {
-    return parseInt(localStorage.getItem(LS_SUDOKU_SECONDS_TAKEN)) || 0;
-}
-
-function _setSecondsTakenToLS(seconds) {
-    localStorage.setItem(LS_SUDOKU_SECONDS_TAKEN, seconds);
-}
-
 function _getBooleanFromLS(key, defaultValue) {
     let val = localStorage.getItem(key);
     if (val === null) {
@@ -64,20 +57,15 @@ function _setBooleanToLS(key, value) {
     localStorage.setItem(key, value ? '1' : '0');
 }
 
-function _getLevelFromLS() {
-    return localStorage.getItem(LS_SUDOKU_LEVEL) || SudokuLevels.EASY;
+function _getStringFromLS(key, defaultValue) {
+    let val = localStorage.getItem(key);
+    if (val === null) {
+        return defaultValue;
+    }
+    return val;
 }
-
-function _setLevelToLS(level) {
-    localStorage.setItem(LS_SUDOKU_LEVEL, level);
-}
-
-function _getGameIdFromLS() {
-    return localStorage.getItem(LS_SUDOKU_GAME_ID) || uuidv4();
-}
-
-function _setGameIdToLS(gameId) {
-    localStorage.setItem(LS_SUDOKU_GAME_ID, gameId);
+function _setStringToLS(key, value) {
+    localStorage.setItem(key, value);
 }
 
 function puzzleChanged({state, commit}) {
@@ -102,8 +90,8 @@ export default new Vuex.Store({
             return new SudokuCell('', false)
         }),
         themeDark: _getBooleanFromLS(LS_SUDOKU_THEME_DARK, false),
-        level: _getLevelFromLS(),
-        secondsTaken: _getSecondsTakenFromLS(),
+        level: _getStringFromLS(LS_SUDOKU_LEVEL, SudokuLevels.EASY),
+        secondsTaken: parseInt(_getStringFromLS(LS_SUDOKU_SECONDS_TAKEN, 0)),
         validation: false,
         history: [],
         ready: false,
@@ -113,15 +101,20 @@ export default new Vuex.Store({
         digitCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0],
         solved: false,
         highScores: _getHighScoresFromLS(),
-        gameId: _getGameIdFromLS(),
+        gameId: _getStringFromLS(LS_SUDOKU_GAME_ID, uuidv4()),
         finished: _getBooleanFromLS(LS_SUDOKU_FINISHED, false),
         highScore: _getBooleanFromLS(LS_SUDOKU_HIGH_SCORE, false),
         allowAutoNotes: _getBooleanFromLS(LS_SUDOKU_ALLOW_AUTO_NOTES, true),
         allowValidation: _getBooleanFromLS(LS_SUDOKU_ALLOW_VALIDATION, true),
         vibrateOnDigitComplete: _getBooleanFromLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, true),
         highlightSingleNote: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
+        showCountdown: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
     },
     mutations: {
+        showCountdown(state, payload) {
+            state.showCountdown = payload;
+            _setBooleanToLS(LS_SUDOKU_SHOW_COUNTDOWN, state.showCountdown)
+        },
         highlightSingleNote(state, payload) {
             state.highlightSingleNote = payload;
             _setBooleanToLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, state.highlightSingleNote)
@@ -140,7 +133,7 @@ export default new Vuex.Store({
         },
         gameId(state, payload) {
             state.gameId = payload;
-            _setGameIdToLS(state.gameId)
+            _setStringToLS(LS_SUDOKU_GAME_ID, state.gameId)
         },
         themeDark(state, payload) {
             console.log('themeDark', payload)
@@ -186,15 +179,15 @@ export default new Vuex.Store({
         },
         level(state, payload) {
             state.level = payload
-            _setLevelToLS(state.level)
+            _setStringToLS(LS_SUDOKU_LEVEL, state.level)
         },
         secondsTaken(state, payload) {
             state.secondsTaken = payload
-            _setSecondsTakenToLS(state.secondsTaken)
+            _setStringToLS(LS_SUDOKU_SECONDS_TAKEN, state.secondsTaken);
         },
         secondsTakenInc(state) {
             state.secondsTaken++
-            _setSecondsTakenToLS(state.secondsTaken)
+            _setStringToLS(LS_SUDOKU_SECONDS_TAKEN, state.secondsTaken);
         },
         toggleValidation(state) {
             state.validation = !state.validation
@@ -323,7 +316,7 @@ export default new Vuex.Store({
             const puzzleJson = localStorage.getItem(LS_SUDOKU_STATE)
             if (puzzleJson) {
                 dispatch('loadPuzzle', JSON.parse(puzzleJson));
-                commit('secondsTaken', _getSecondsTakenFromLS());
+                commit('secondsTaken', parseInt(_getStringFromLS(LS_SUDOKU_SECONDS_TAKEN, 0)));
             } else {
                 dispatch('newPuzzle', SudokuLevels.EASY);
                 dispatch('saveGame');

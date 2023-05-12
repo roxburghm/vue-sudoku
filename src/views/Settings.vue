@@ -27,6 +27,10 @@
             <SettingItem icon="mdi-marker" label="Highlight notes containing single value">
                 <v-switch color="sudoku" v-model="highlightSingleNote"/>
             </SettingItem>
+
+            <SettingItem icon="mdi-stopwatch" label="Show countdown bar">
+                <v-switch color="sudoku" v-model="showCountdown"/>
+            </SettingItem>
         </v-sheet>
     </v-container>
 </template>/
@@ -58,6 +62,14 @@ export default {
             },
             set(value) {
                 this.$store.commit('allowValidation', value)
+            }
+        },
+        showCountdown: {
+            get() {
+                return this.$store.state.showCountdown
+            },
+            set(value) {
+                this.$store.commit('showCountdown', value)
             }
         },
         allowAutoNotes: {

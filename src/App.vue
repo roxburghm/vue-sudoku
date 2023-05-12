@@ -63,7 +63,6 @@ export default {
     components: {SudokuHelp},
     mounted() {
         this.$vuetify.theme.dark = this.$store.state.themeDark;
-        console.log('Mounted Set theme to ', this.$store.state.themeDark)
     },
     data: () => ({
         isHelpVisible: false,
