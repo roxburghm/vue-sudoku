@@ -3,41 +3,52 @@
         <div class="text-center">
             <div class="headline">{{ praise }}</div>
             <div class="my-6">
-                <v-icon v-if="highScore" color="pink darken-1" size="128">mdi-cupcake</v-icon>
-                <v-avatar v-else size="128">
-                    <v-img contain width="128" :src="`/images/logoFor${theme}.png`"/>
-                </v-avatar>
-            </div>
-            <div class="my-4">
-                <v-chip outlined large class="px-6" color="black">Your time in {{level}} mode <span class="mx-2 grey--text text--lighten-1">&mdash;</span><elapsed-time :seconds="secondsTaken" /></v-chip>
-            </div>
-            <v-divider class="my-4"/>
+                <div class="my-6">
+                    <v-icon v-if="highScore" color="pink darken-1" size="128">mdi-cupcake</v-icon>
+                    <v-avatar v-else size="128">
+                        <v-img contain width="128" :src="`/images/logoFor${theme}.png`"/>
+                    </v-avatar>
+                </div>
+                <div class="my-4">
+                    <v-chip outlined large class="px-6" color="black">Your time in {{ level }} mode <span
+                            class="mx-2 grey--text text--lighten-1">&mdash;</span>
+                        <elapsed-time :seconds="secondsTaken"/>
+                    </v-chip>
+                </div>
+                <v-divider class="my-4"/>
 
-            <v-carousel v-model="showLevel" :show-arrows="true" :continuous="false" hide-delimiter-background hide-delimiters>
-                <v-carousel-item v-for="hLevel in levels" :key="`level-${hLevel}`">
-                    <v-sheet>
-                    <div class="headline mb-2 text-capitalize">High Scores - {{ hLevel }} Mode</div>
-                    <v-simple-table dense style="max-width: 500px" class="mx-auto">
-                        <tbody>
-                        <tr v-for="(entry, index) in getHighScoresForLevel(hLevel)" :key="`tr-${index}`"
-                            :class="{ 'its-me' : gameId === entry.gameId }">
-                            <td class="right placement grey--text">{{ index + 1 }}.</td>
-                            <td class="text-left">{{ entry.when|asDateTime }}</td>
-                            <td class="text-right"><elapsed-time :seconds="entry.time" /></td>
-                        </tr>
-                        </tbody>
-                    </v-simple-table>
- <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
-                    </v-sheet>
-                </v-carousel-item>
-            </v-carousel>
-           
+                <v-carousel v-model="showLevel" :show-arrows="false" :continuous="false"
+                            hide-delimiter-background hide-delimiters height="360">
+                    <v-carousel-item v-for="hLevel in levels" :key="`level-${hLevel}`" class="red">
+                        <v-sheet>
+                            <div class="headline mb-2 text-capitalize">High Scores - {{ hLevel }} Mode</div>
+                            <v-simple-table dense style="max-width: 500px" class="mx-auto">
+                                <tbody>
+                                <tr v-for="(entry, index) in getHighScoresForLevel(hLevel)" :key="`tr-${index}`"
+                                    :class="{ 'its-me' : gameId === entry.gameId }">
+                                    <td class="right placement grey--text">{{ index + 1 }}.</td>
+                                    <td class="text-left">
+                                        <span v-if="entry.time">{{ entry.when|asDateTime }}</span></td>
+                                    <td class="text-right">
+                                        <elapsed-time v-if="entry.time" :seconds="entry.time"/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </v-simple-table>
+                        </v-sheet>
+                    </v-carousel-item>
+                </v-carousel>
+                <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
+            </div>
         </div>
     </v-sheet>
 </template>/
 <script>
 import ElapsedTime from "@/components/ElapsedTime.vue";
 import {SudokuLevels} from "@/plugins/sudoku";
+import CloneDeep from 'lodash/cloneDeep';
+
+const NO_OF_HIGH_SCORES = 10;
 
 export default {
     name: 'HighScores',
@@ -54,7 +65,13 @@ export default {
     },
     methods: {
         getHighScoresForLevel(level) {
-            return this.$store.state.highScores[level]
+            let scores = CloneDeep(this.$store.state.highScores[level]);
+            if (scores.length < NO_OF_HIGH_SCORES) {
+                for (let i = scores.length; i < NO_OF_HIGH_SCORES; i++) {
+                    scores.push({time: 0, when: '', gameId: 0});
+                }
+            }
+            return scores;
         },
     },
     computed: {
