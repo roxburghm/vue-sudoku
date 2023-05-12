@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-app-bar app :dark="$store.state.themeDark" light>
+        <v-app-bar flat app :dark="$store.state.themeDark" light>
             <div class="d-flex align-center">
                 <v-img alt="Sudoku" class="shrink mr-2" contain :src="`/images/logoFor${theme}.png`"
                        transition="scale-transition" width="40"

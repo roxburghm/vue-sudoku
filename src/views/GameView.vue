@@ -1,6 +1,7 @@
 <template>
     <div class="d-block fill-height">
-        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeft" reverse color="sudoku" :background-opacity="0"/>
+        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeft" reverse
+                           :color="progressColour" :background-opacity="0"/>
 
         <div v-if="!ready" class="fill-height align-center text-center justify-center d-flex flex-column">
             <div>
@@ -99,13 +100,25 @@ export default {
         },
     },
     computed: {
+        progressColour() {
+            return this.$store.state.secondsTaken < this.fastestTime ?
+                'sudoku-progress-high-score' : 'sudoku-progress';
+        },
+        slowestTime() {
+            let highScoreCount = this.$store.state.highScores[this.level].length;
+            if (highScoreCount === 0) return 0;
+            return this.$store.state.highScores[this.level][highScoreCount - 1].time;
+        },
         fastestTime() {
             if (this.$store.state.highScores[this.level].length === 0) return 0;
             return this.$store.state.highScores[this.level][0].time;
         },
         pcntTimeLeft() {
-            if (this.fastestTime === 0) return 0;
+            if (this.slowestTime === 0) return 0;
             let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.fastestTime * 100);
+            if (pcntTimeLeft > 0) return pcntTimeLeft;
+
+            pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.slowestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
         },
         showCountdown() {

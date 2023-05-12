@@ -14,6 +14,8 @@ export default new Vuetify({
                 secondary: '#c8e2ee',
                 black: '#333333',
                 sudoku: '#4dc2f8',
+                'sudoku-progress-high-score': '#20a8e7',
+                'sudoku-progress': '#333',
                 'sudoku-cell-selected-color': '#20a8e7',
                 'sudoku-cell-selected-text-color': '#fff',
                 'sudoku-cell-highlighted-color': '#888',
@@ -33,6 +35,8 @@ export default new Vuetify({
                 secondary: '#85969d',
                 black: '#ffffff',
                 sudoku: '#4dc2f8',
+                'sudoku-progress-high-score': '#20a8e7',
+                'sudoku-progress': '#ddd',
                 'sudoku-cell-selected-color': '#20a8e7',
                 'sudoku-cell-selected-text-color': '#000',
 
