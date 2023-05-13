@@ -105,11 +105,11 @@ export default {
         slowestTime() {
             let highScoreCount = this.$store.state.highScores[this.level].length;
             if (highScoreCount === 0) return 0;
-            return 30; // this.$store.state.highScores[this.level][highScoreCount - 1].time;
+            return this.$store.state.highScores[this.level][highScoreCount - 1].time;
         },
         fastestTime() {
             if (this.$store.state.highScores[this.level].length === 0) return 0;
-            return 15; //this.$store.state.highScores[this.level][0].time;
+            return this.$store.state.highScores[this.level][0].time;
         },
         pcntTimeLeftTopScore() {
             if (this.slowestTime === 0) return 0;
