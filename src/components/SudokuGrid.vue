@@ -3,7 +3,7 @@
     <div
             @touchstart="cellDragStart"
             @touchend="cellDragEnd"
-            @touchmove="cellDragging"
+            @touchmove.p.prevent="cellDragging"
     >
         <div class="sudoku-grid shrink d-inline-block overflow-x-hidden text-no-wrap">
             <div v-for="blockRow in [1,2,3]" :key="`br-${blockRow}`" class="grid-row">
@@ -23,7 +23,8 @@ export default {
     components: {SudokuBlock},
     data() {
         return {
-            draggedCells: []
+            draggedCells: [],
+            dragStartTimer: null,
         }
     },
     methods: {
@@ -38,10 +39,17 @@ export default {
             return null;
         },
         cellDragStart() {
+            if (!this.$store.state.dragToScrub || this.selectedDigit < 1) {
+                return;
+            }
             this.draggedCells = [];
+            this.dragStartTimer = setTimeout(() => {
+                navigator.vibrate(50);
+                this.dragStartTimer = null;
+            }, 500);
         },
         cellDragging(event) {
-            if (!this.$store.state.dragToScrub || this.selectedDigit < 1) {
+            if (!this.$store.state.dragToScrub || this.selectedDigit < 1 || this.dragStartTimer !== null) {
                 return;
             }
             let cell = this.findCellIndexOfMoveEvent(event);
@@ -56,6 +64,12 @@ export default {
             this.draggedCells.push(cell);
         },
         cellDragEnd() {
+            if (this.dragStartTimer) {
+                window.clearTimeout(this.dragStartTimer);
+                this.dragStartTimer = null;
+                return;
+            }
+
             if (!this.$store.state.dragToScrub || this.selectedDigit < 1) {
                 return;
             }

@@ -36,7 +36,7 @@ export default {
     },
     data() {
         return {
-            intervalTimer: null
+            intervalTimer: null,
         }
     },
     mounted() {
