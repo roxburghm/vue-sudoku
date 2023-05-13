@@ -5,7 +5,7 @@
                 <v-img alt="Sudoku" class="shrink mr-2" contain :src="`/images/logoFor${theme}.png`"
                        transition="scale-transition" width="40"
                 />
-                Sudoku
+                <span class="headline font-weight-light ml-2 grey--text">Sudoku</span>
 
             </div>
 

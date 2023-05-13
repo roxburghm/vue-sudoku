@@ -1,7 +1,9 @@
 <template>
     <div class="d-block fill-height">
-        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeft" reverse
-                           :color="progressColour" :background-opacity="0"/>
+        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeftHighScore" reverse
+                           color="sudoku-progress" :background-opacity="0"/>
+        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeftTopScore" reverse
+                           color="sudoku-progress-high-score" :background-opacity="0"/>
 
         <div v-if="!ready" class="fill-height align-center text-center justify-center d-flex flex-column">
             <div>
@@ -12,7 +14,7 @@
         <v-container v-else class="text-center">
             <v-chip outlined color="grey" class="my-4" small>Difficulty:
                 <span class="text-capitalize mx-1">{{ level }}</span> <span class="mx-1 grey--text text--lighten-2">&mdash;</span>
-                <elapsed-time :seconds="$store.state.secondsTaken" />
+                <elapsed-time :seconds="$store.state.secondsTaken"/>
             </v-chip>
             <sudoku-grid/>
             <sudoku-keypad @difficulty="difficultySelect"/>
@@ -60,7 +62,7 @@ export default {
                         this.checkHighScore(this.level, this.$store.state.secondsTaken)
                         this.$store.commit('ready', false);
                         this.$store.commit('finished', true);
-                        this.$router.replace({ name: 'HighScores' });
+                        this.$router.replace({name: 'HighScores'});
                     }
                 }
             },
@@ -100,25 +102,23 @@ export default {
         },
     },
     computed: {
-        progressColour() {
-            return this.$store.state.secondsTaken < this.fastestTime ?
-                'sudoku-progress-high-score' : 'sudoku-progress';
-        },
         slowestTime() {
             let highScoreCount = this.$store.state.highScores[this.level].length;
             if (highScoreCount === 0) return 0;
-            return this.$store.state.highScores[this.level][highScoreCount - 1].time;
+            return 30; // this.$store.state.highScores[this.level][highScoreCount - 1].time;
         },
         fastestTime() {
             if (this.$store.state.highScores[this.level].length === 0) return 0;
-            return this.$store.state.highScores[this.level][0].time;
+            return 15; //this.$store.state.highScores[this.level][0].time;
         },
-        pcntTimeLeft() {
+        pcntTimeLeftTopScore() {
             if (this.slowestTime === 0) return 0;
             let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.fastestTime * 100);
-            if (pcntTimeLeft > 0) return pcntTimeLeft;
-
-            pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.slowestTime * 100);
+            return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
+        },
+        pcntTimeLeftHighScore() {
+            if (this.slowestTime === 0) return 0;
+            let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.slowestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
         },
         showCountdown() {

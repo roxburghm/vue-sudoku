@@ -23,6 +23,7 @@ const LS_SUDOKU_HIGH_SCORE = 'SudokuHighScore';
 const LS_SUDOKU_ALLOW_AUTO_NOTES = 'SudokuAllowAutoNotes';
 const LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE = 'SudokuVibrateOnDigitComplete';
 const LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE = 'SudokuHighlightSingleNote';
+const LS_SUDOKU_DRAG_TO_SCRUB = 'SudokuDragToScrub';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -109,8 +110,13 @@ export default new Vuex.Store({
         vibrateOnDigitComplete: _getBooleanFromLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, true),
         highlightSingleNote: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
         showCountdown: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
+        dragToScrub: _getBooleanFromLS(LS_SUDOKU_DRAG_TO_SCRUB, true),
     },
     mutations: {
+        dragToScrub(state, payload) {
+            state.dragToScrub = payload;
+            _setBooleanToLS(LS_SUDOKU_DRAG_TO_SCRUB, state.dragToScrub)
+        },
         showCountdown(state, payload) {
             state.showCountdown = payload;
             _setBooleanToLS(LS_SUDOKU_SHOW_COUNTDOWN, state.showCountdown)
@@ -246,6 +252,15 @@ export default new Vuex.Store({
                 notes = [false, false, false, false, false, false, false, false, false];
             } else {
                 notes[parseInt(guess) - 1] = !notes[parseInt(guess) - 1]
+            }
+            this.commit('setCellNotes', {cellIndex, notes});
+        },
+        setCellNote(state, {cellIndex, digit, value}) {
+            let notes = [...state.cells[cellIndex].notes];
+            if (digit <= 0) {
+                notes = [false, false, false, false, false, false, false, false, false];
+            } else {
+                notes[parseInt(digit) - 1] = value;
             }
             this.commit('setCellNotes', {cellIndex, notes});
         }

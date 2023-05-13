@@ -1,8 +1,8 @@
 <template>
     <v-container class="justify-center d-flex">
 
-        <v-sheet max-width="600">
-            <div class="headline mb-8">
+        <v-sheet max-width="600" class="mx-4">
+            <div class="headline my-8">
                 <v-btn class="mr-4" :to="{name: 'GameView'}" icon>
                     <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
@@ -30,6 +30,9 @@
 
             <SettingItem icon="mdi-timer-outline" label="Show countdown bar">
                 <v-switch color="sudoku" v-model="showCountdown"/>
+            </SettingItem>
+            <SettingItem icon="mdi-timer-outline" label="Drag across board to scrub notes">
+                <v-switch color="sudoku" v-model="dragToScrub"/>
             </SettingItem>
         </v-sheet>
     </v-container>
@@ -94,6 +97,14 @@ export default {
             },
             set(value) {
                 this.$store.commit('highlightSingleNote', value)
+            }
+        },
+        dragToScrub: {
+            get() {
+                return this.$store.state.dragToScrub
+            },
+            set(value) {
+                this.$store.commit('dragToScrub', value)
             }
         }
     }

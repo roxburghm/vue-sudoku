@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-divider class="my-4" v-shortkey="{ up: ['arrowup'], down: ['arrowdown'], left: ['arrowleft'], right: ['arrowright']}" @shortkey="cursorMove" />
+        <v-divider class="my-3" v-shortkey="{ up: ['arrowup'], down: ['arrowdown'], left: ['arrowleft'], right: ['arrowright']}" @shortkey="cursorMove" />
         <div class="d-flex flex-row justify-center">
             <sudoku-key :small="isSmallButton" @click="toggleDigit(1)" :digit="1" :selected="1 === selectedDigit" :shortcut="['1']"/>
             <sudoku-key :small="isSmallButton" @click="toggleDigit(2)" :digit="2" :selected="2 === selectedDigit" :shortcut="['2']"/>
@@ -16,7 +16,7 @@
             <sudoku-key :small="isSmallButton" @click="toggleDigit(0)" :digit="0" :selected="0 === selectedDigit" :shortcut="{ zero: ['0'], e: ['e'], backspace: ['backspace' ], delete: ['del'] }"
                         icon="mdi-eraser"/>
         </div>
-        <v-divider class="my-4" />
+        <v-divider class="my-3" />
         <div class="d-flex flex-row justify-center">
             <sudoku-key
                     v-if="allowValidation"
@@ -91,9 +91,9 @@ export default {
         autoNotes() {
             this.$store.commit('pushGameHistory');
             this.$store.dispatch('autoNotes');
-            if (process.env.NODE_ENV === 'development') {
-                this.$store.dispatch('autoPass');
-            }
+            // if (process.env.NODE_ENV === 'development') {
+            //     this.$store.dispatch('autoPass');
+            // }
 
             this.$store.dispatch('saveGame');
         },

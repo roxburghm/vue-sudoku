@@ -1,5 +1,5 @@
 <template>
-    <v-row dense>
+    <v-row dense no-gutters>
     <v-col cols="12">
         <v-divider/>
     </v-col>

@@ -1,5 +1,7 @@
 <template>
-    <div class="sudoku-cell d-inline-block" @click="toggleCellSelect" :class="cellTypeClass + ' ' + cellAdditionalClass">
+    <div class="sudoku-cell d-inline-block" :data-cell-index="index"
+         @click="toggleCellSelect"
+         :class="cellTypeClass + ' ' + cellAdditionalClass">
         <v-scale-transition origin="center center">
             <div class="sudoku-cell-indicator"></div>
         </v-scale-transition>
@@ -24,14 +26,23 @@ export default {
     name: "SudokuCell",
     components: {SudokuNotes},
     props: {
-        index: {type: Number, required: true}
+        index: {type: Number, required: true},
+        transparentCells: {type: Array, required: true}
     },
     data() {
         return {
-            visible: true
+            visible: true,
+            localTransparentCells: []
         }
     },
     watch: {
+        transparentCells: {
+            immediate: true,
+            handler() {
+                this.localTransparentCells = [...this.transparentCells];
+            },
+            deep: true
+        },
         cellGuess() {
             this.visible = false;
             this.$nextTick(() => {
@@ -59,10 +70,14 @@ export default {
         },
     },
     computed: {
+        isTransparent() {
+            return this.localTransparentCells.includes(`${this.index}`);
+        },
         cellAdditionalClass() {
             return (this.showNotes ? 'cell-notes' : '') + ' ' + (this.cellLocked ? 'cell-locked' : '')
         },
         cellTypeClass() {
+            if (this.isTransparent) return 'cell-transparent';
             // eslint-disable-next-line no-constant-condition
             if (this.isValidationOn && this.cellGuess !== '' && parseInt(this.cellGuess) !== parseInt(this.cellActual)) return 'cell-incorrect';
             if (this.cellSelected) return 'cell-selected';
@@ -126,6 +141,12 @@ export default {
     padding: 5px;
     text-align: center;
     position: relative;
+}
+
+.sudoku-cell.cell-transparent {
+    opacity: 0.3;
+    border: 2px dotted grey;
+    background-color: lightblue;
 }
 
 .sudoku-cell.cell-locked {

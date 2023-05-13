@@ -15,6 +15,7 @@
             <v-divider class="my-4"/>
             <p>Entry Hint: If you select a cell on the grid (highlighted blue) then can use the keypad to enter a guess or make notes into that call. Alternatively if you select a digit on the keypad
                 you can tap on the grid to enter that digit into the cells guess or notes fields.</p>
+            <p>To quickly clear notes, ensure you have Drag To Clear enabled in settings, and drag your finger across the cells you want to clear the notes for currently select digit.</p>
             <v-divider class="my-4"/>
             <p>Sudoku is also accessible via the keyboard. The following shortcuts are available:</p>
             <v-simple-table dense>

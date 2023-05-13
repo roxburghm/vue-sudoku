@@ -2,8 +2,9 @@
     <div class="d-inline-block sudoku-block">
         <div v-for="cellRow in [1,2,3]" :key="`cr-${cellRow}`" class="sudoku-row">
         <sudoku-cell v-for="cellCol in [1,2,3]" :key="`cc-${cellCol}`"
-                     class="sudoku-cell" :class="`sudoku-cell-${cellRow}-${cellCol}`"
-        :index="cellIndex(cellRow, cellCol)"/>
+                     class="sudoku-cell" :transparent-cells="transparentCells"
+                     :class="`sudoku-cell-${cellRow}-${cellCol}`"
+                     :index="cellIndex(cellRow, cellCol)"/>
         </div>
     </div>
 </template>
@@ -16,7 +17,8 @@ export default {
     components: {SudokuCell},
     props: {
         row: { type: Number, required: true},
-        col: { type: Number, required: true}
+        col: { type: Number, required: true},
+        transparentCells: { type: Array, required: true}
     },
     methods: {
         cellIndex(cellRow, cellCol) {

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex ma-2">
+    <div class="d-flex mx-2 my-1">
         <div class="btn-progress-container">
             <v-btn icon :selected="selected" x-large v-shortkey="shortcut" @shortkey="shortcutPressed">
         <v-progress-circular :class="{ 'btn-selected': selected, 'btn-complete' : isComplete }"
