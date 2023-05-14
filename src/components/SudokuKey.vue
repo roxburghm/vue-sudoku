@@ -36,7 +36,7 @@ export default {
             return this.showProgress && this.countDigits >= 9;
         },
         progressSize() {
-            return this.$vuetify.breakpoint.smAndDown ? 44 : 60;
+            return this.$vuetify.breakpoint.smAndDown ? 44 : 52;
         },
         showProgress() {
             return this.digit >= 0;

@@ -1,7 +1,6 @@
 <template>
     <v-container class="justify-center d-flex">
-
-        <v-sheet max-width="600" class="mx-4">
+        <v-sheet max-width="600" class="px-4 transparent">
             <div class="headline my-8">
                 <v-btn class="mr-4" :to="{name: 'GameView'}" icon>
                     <v-icon>mdi-arrow-left</v-icon>

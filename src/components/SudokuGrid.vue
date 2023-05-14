@@ -3,7 +3,7 @@
     <div
             @touchstart="cellDragStart"
             @touchend="cellDragEnd"
-            @touchmove.p.prevent="cellDragging"
+            @touchmove="cellDragging"
     >
         <div class="sudoku-grid shrink d-inline-block overflow-x-hidden text-no-wrap">
             <div v-for="blockRow in [1,2,3]" :key="`br-${blockRow}`" class="grid-row">
@@ -52,6 +52,7 @@ export default {
             if (!this.$store.state.dragToScrub || this.selectedDigit < 1 || this.dragStartTimer !== null) {
                 return;
             }
+            event.prevent();
             let cell = this.findCellIndexOfMoveEvent(event);
 
             if (cell === null || this.draggedCells.includes(cell))
