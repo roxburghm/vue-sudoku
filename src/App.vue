@@ -10,16 +10,18 @@
             </div>
 
             <v-spacer></v-spacer>
-            <v-btn @click="togglePause"  icon v-if="$route.name === 'GameView'" large class="mr-4">
-                <v-icon>mdi-pause</v-icon>
-            </v-btn>
-            <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4">
-                <v-icon>mdi-cog</v-icon>
-            </v-btn>
-            <v-btn icon @click="isHelpVisible = true" large
-                   v-shortkey="{q: ['?'], shiftQ: ['shift', '?'], slash: ['/']}" @shortkey="isHelpVisible = true">
-                <v-icon>mdi-help-circle-outline</v-icon>
-            </v-btn>
+            <div class="text-no-wrap">
+                <v-btn @click="togglePause" icon v-show="$route.name === 'GameView'" large class="mr-4">
+                    <v-icon>mdi-pause</v-icon>
+                </v-btn>
+                <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4">
+                    <v-icon>mdi-cog</v-icon>
+                </v-btn>
+                <v-btn icon @click="isHelpVisible = true" large
+                       v-shortkey="{q: ['?'], shiftQ: ['shift', '?'], slash: ['/']}" @shortkey="isHelpVisible = true">
+                    <v-icon>mdi-help-circle-outline</v-icon>
+                </v-btn>
+            </div>
         </v-app-bar>
 
         <v-main>
@@ -71,8 +73,7 @@ export default {
     }),
     methods: {
         togglePause() {
-        console.log('toggle');
-        this.$store.commit('togglePaused');
+            this.$store.commit('togglePaused');
         },
         swapTheme() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;

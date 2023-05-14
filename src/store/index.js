@@ -116,7 +116,6 @@ export default new Vuex.Store({
     mutations: {
         togglePaused(state) {
             state.paused = !state.paused;
-            console.log('paused', state.paused);
         },
         dragToScrub(state, payload) {
             state.dragToScrub = payload;

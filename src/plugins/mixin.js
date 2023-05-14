@@ -43,6 +43,9 @@ export default {
         level() {
             return this.$store.state.level;
         },
+        paused() {
+           return this.$store.state.paused;
+        },
         historyLength() {
             return this.$store.state.history.length;
         },
