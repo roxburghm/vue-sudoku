@@ -10,7 +10,9 @@
             </div>
 
             <v-spacer></v-spacer>
-
+            <v-btn @click="togglePause"  icon v-if="$route.name === 'GameView'" large class="mr-4">
+                <v-icon>mdi-pause</v-icon>
+            </v-btn>
             <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4">
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
@@ -68,6 +70,10 @@ export default {
         isHelpVisible: false,
     }),
     methods: {
+        togglePause() {
+        console.log('toggle');
+        this.$store.commit('togglePaused');
+        },
         swapTheme() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
             this.$store.commit('themeDark', this.$vuetify.theme.dark);

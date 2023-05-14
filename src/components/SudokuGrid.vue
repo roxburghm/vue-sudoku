@@ -38,21 +38,23 @@ export default {
             }
             return null;
         },
-        cellDragStart() {
-            if (!this.$store.state.dragToScrub || this.selectedDigit < 1) {
+        cellDragStart(event) {
+            if (!this.$store.state.dragToScrub || this.selectedDigit < 1 || event.touches.length > 1) {
                 return;
             }
+            let cell = this.findCellIndexOfMoveEvent(event);
             this.draggedCells = [];
             this.dragStartTimer = setTimeout(() => {
                 navigator.vibrate(50);
                 this.dragStartTimer = null;
+                this.draggedCells.push(cell);
             }, 500);
         },
         cellDragging(event) {
-            if (!this.$store.state.dragToScrub || this.selectedDigit < 1 || this.dragStartTimer !== null) {
+            if (!this.$store.state.dragToScrub || this.selectedDigit < 1 || this.dragStartTimer !== null || event.touches.length > 1) {
                 return;
             }
-            event.prevent();
+            event.preventDefault();
             let cell = this.findCellIndexOfMoveEvent(event);
 
             if (cell === null || this.draggedCells.includes(cell))
@@ -62,6 +64,7 @@ export default {
                 return;
             }
 
+            navigator.vibrate(50);
             this.draggedCells.push(cell);
         },
         cellDragEnd() {

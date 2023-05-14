@@ -16,7 +16,10 @@
                 <span class="text-capitalize mx-1">{{ level }}</span> <span class="mx-1 grey--text text--lighten-2">&mdash;</span>
                 <elapsed-time :seconds="$store.state.secondsTaken"/>
             </v-chip>
-            <sudoku-grid/>
+            <div v-if="$store.state.paused">
+            <v-icon @click="$store.commit('togglePaused')" v-if="$store.state.paused" class="grid-size">mdi-pause-circle-outline</v-icon>
+            </div>
+            <sudoku-grid v-else/>
             <sudoku-keypad @difficulty="difficultySelect"/>
         </v-container>
     </div>
@@ -127,3 +130,11 @@ export default {
     }
 }
 </script>
+
+<style>
+.grid-size {
+    font-size: calc(var(--sudouku-block-border) * 2 + var(--sudouku-cell-border) * 6 + var(--sudoku-cell-size) * 9
+    + var(--sudouku-grid-border-overhang) * 2
+    )  !important;
+}
+</style>

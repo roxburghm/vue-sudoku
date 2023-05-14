@@ -103,6 +103,7 @@ export default new Vuex.Store({
         solved: false,
         highScores: _getHighScoresFromLS(),
         gameId: _getStringFromLS(LS_SUDOKU_GAME_ID, uuidv4()),
+        paused: false,
         finished: _getBooleanFromLS(LS_SUDOKU_FINISHED, false),
         highScore: _getBooleanFromLS(LS_SUDOKU_HIGH_SCORE, false),
         allowAutoNotes: _getBooleanFromLS(LS_SUDOKU_ALLOW_AUTO_NOTES, true),
@@ -113,6 +114,10 @@ export default new Vuex.Store({
         dragToScrub: _getBooleanFromLS(LS_SUDOKU_DRAG_TO_SCRUB, true),
     },
     mutations: {
+        togglePaused(state) {
+            state.paused = !state.paused;
+            console.log('paused', state.paused);
+        },
         dragToScrub(state, payload) {
             state.dragToScrub = payload;
             _setBooleanToLS(LS_SUDOKU_DRAG_TO_SCRUB, state.dragToScrub)
@@ -192,8 +197,10 @@ export default new Vuex.Store({
             _setStringToLS(LS_SUDOKU_SECONDS_TAKEN, state.secondsTaken);
         },
         secondsTakenInc(state) {
-            state.secondsTaken++
-            _setStringToLS(LS_SUDOKU_SECONDS_TAKEN, state.secondsTaken);
+            if (!state.paused) {
+                state.secondsTaken++
+                _setStringToLS(LS_SUDOKU_SECONDS_TAKEN, state.secondsTaken);
+            }
         },
         toggleValidation(state) {
             state.validation = !state.validation
