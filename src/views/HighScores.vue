@@ -4,7 +4,7 @@
             <div class="headline font-weight-light">{{ praise }}</div>
             <div class="my-6">
                 <div class="my-6">
-                    <sudoku-logo v-if="highScore || true"  icon="mdi-cupcake" size="128"/>
+                    <sudoku-logo v-if="highScore"  icon="mdi-cupcake" size="128"/>
                     <sudoku-logo v-else size="128"/>
                 </div>
                 <div class="my-4">
