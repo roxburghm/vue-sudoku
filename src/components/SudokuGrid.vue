@@ -51,6 +51,10 @@ export default {
             }, 500);
         },
         cellDragging(event) {
+            if (this.dragStartTimer !== null && event.touches.length > 1) {
+                this.clearDragTimer();
+                return;
+            }
             if (!this.$store.state.dragToScrub || this.selectedDigit < 1 || this.dragStartTimer !== null || event.touches.length > 1) {
                 return;
             }
@@ -67,10 +71,14 @@ export default {
             navigator.vibrate(50);
             this.draggedCells.push(cell);
         },
+        clearDragTimer() {
+            window.clearTimeout(this.dragStartTimer);
+            this.dragStartTimer = null;
+
+        },
         cellDragEnd() {
             if (this.dragStartTimer) {
-                window.clearTimeout(this.dragStartTimer);
-                this.dragStartTimer = null;
+                this.clearDragTimer();
                 return;
             }
 

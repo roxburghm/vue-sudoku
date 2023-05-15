@@ -30,7 +30,7 @@
             <SettingItem icon="mdi-timer-outline" label="Show countdown bar">
                 <v-switch color="sudoku" v-model="showCountdown"/>
             </SettingItem>
-            <SettingItem icon="mdi-timer-outline" label="Drag across board to scrub notes">
+            <SettingItem icon="mdi-gesture-swipe-right" label="Drag across board to scrub notes">
                 <v-switch color="sudoku" v-model="dragToScrub"/>
             </SettingItem>
         </v-sheet>
