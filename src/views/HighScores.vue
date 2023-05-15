@@ -4,8 +4,8 @@
             <div class="headline font-weight-light">{{ praise }}</div>
             <div class="my-6">
                 <div class="my-6">
-                    <sudoku-logo v-if="highScore"  icon="mdi-cupcake" size="128"/>
-                    <sudoku-logo v-else size="128"/>
+                    <sudoku-logo v-if="highScore"  icon="mdi-cupcake" :size="128" color="gold" class="breathe-gold"/>
+                    <sudoku-logo v-else :size="128" :rotated="false" icon="mdi-check-circle-outline" class="breathe"/>
                 </div>
                 <div class="my-4">
                     <v-chip outlined large class="px-6" color="black">Your time in {{ level }} mode <span
@@ -13,18 +13,18 @@
                         <elapsed-time :seconds="secondsTaken"/>
                     </v-chip>
                 </div>
-                <v-divider class="my-4"/>
 
-                <v-carousel v-model="showLevel" :show-arrows="false" :continuous="false"
+                <v-carousel v-model="showLevel" :show-arrows="false" :continuous="false" class="mt-6"
                             hide-delimiter-background hide-delimiters height="360">
                     <v-carousel-item v-for="hLevel in levels" :key="`level-${hLevel}`">
                         <v-sheet elevation="0">
-                            <div class="headline mb-2 text-capitalize font-weight-light sudoku sudoku-cell-color--text">High Scores - {{ hLevel }} Mode</div>
+                            <div class="headline text-capitalize font-weight-light sudoku--text">High Scores - {{ hLevel }} Mode</div>
+                            <v-divider class="mb-2 sudoku"/>
                             <v-simple-table dense style="max-width: 500px" class="mx-auto">
                                 <tbody>
                                 <tr v-for="(entry, index) in getHighScoresForLevel(hLevel)" :key="`tr-${index}`"
                                     :class="{ 'its-me' : gameId === entry.gameId }">
-                                    <td class="right placement grey--text">{{ index + 1 }}.</td>
+                                    <td class="right placement">{{ index + 1 }}.</td>
                                     <td class="text-left">
                                         <span v-if="entry.time">{{ entry.when|asDateTime }}</span></td>
                                     <td class="text-right">
@@ -100,5 +100,6 @@ export default {
 
 .placement {
     width: 2em;
+    opacity: 0.7;
 }
 </style>

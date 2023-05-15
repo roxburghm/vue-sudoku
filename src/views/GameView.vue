@@ -4,10 +4,8 @@
                           :buffer-value="pcntTimeLeftHighScore" :stream="pcntTimeLeftHighScore > 0" color="sudoku" />
 
         <div v-if="!ready" class="fill-height align-center text-center justify-center d-flex flex-column">
-            <div>
-                <v-img width="128" height="128" :src="`/images/logoFor${theme}.png`"/>
-            </div>
-            <div class="headline font-weight-light mt-6">Generating ...</div>
+                <sudoku-logo :size="200" class="breathe" />
+            <v-chip outlined class="font-weight-light px-6 mt-10" large>generating ...</v-chip>
         </div>
         <v-container v-else class="text-center">
             <v-chip outlined color="grey" class="my-4" small>Difficulty:
@@ -27,10 +25,12 @@
 import SudokuGrid from "@/components/SudokuGrid.vue";
 import SudokuKeypad from "@/components/SudokuKeypad.vue";
 import ElapsedTime from "@/components/ElapsedTime.vue";
+import SudokuLogo from "@/views/SudokuLogo.vue";
 
 export default {
     name: 'GameView',
     components: {
+        SudokuLogo,
         ElapsedTime,
         SudokuKeypad,
         SudokuGrid
@@ -132,6 +132,8 @@ export default {
 </script>
 
 <style>
+
+
 .grid-size {
     font-size: calc(var(--sudoku-block-border) * 2 + var(--sudoku-cell-border-size) * 6 + var(--sudoku-cell-size) * 9 + var(--sudoku-grid-border-overhang) * 2)  !important;
 }

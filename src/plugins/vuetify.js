@@ -15,6 +15,7 @@ export default new Vuetify({
                 sudoku: '#4dc2f8',
                 // sudoku: '#e36d0e',
                 'sudoku-cell-color': '#fff',
+                'gold': 'ffbf00'
             },
 
 

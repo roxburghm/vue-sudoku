@@ -121,4 +121,46 @@ body {
     bottom: 0;
 }
 
+.breathe {
+    animation: breathing 3s ease-out infinite normal;
+}
+
+@keyframes breathing  {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 var(--v-sudoku-base)
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+.breathe-gold {
+    animation: breathing-gold 3s ease-out infinite normal;
+}
+
+@keyframes breathing-gold  {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 var(--v-gold-lighten1);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
 </style>

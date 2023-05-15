@@ -85,8 +85,24 @@ export default {
             if (!this.$store.state.dragToScrub || this.selectedDigit < 1) {
                 return;
             }
+
+            // if we have a single cell and it's got a single note then make this the guess
+            if (this.draggedCells.length === 1) {
+                let cell = this.draggedCells[0];
+                let notes = this.$store.state.cells[cell].notes;
+                let noteCount = notes.reduce((acc, note) => acc + (note ? 1 : 0), 0);
+                if (noteCount === 1) {
+                    let note = notes.reduce((acc, value, note) => Math.max(acc, value ? note + 1 : 0));
+                    this.$store.commit('setCellGuess', {cellIndex: cell, guess: note});
+                    this.draggedCells = [];
+                    return;
+                }
+            }
+
             // OK we have a list of cells, if we have a keypad value selected we need to clear the note
             // for this digit in each cell.
+
+
 
 
             for (let cell of this.draggedCells) {

@@ -1,6 +1,6 @@
 {
   "name": "sudoku",
-  "version": "1.4.5",
+  "version": "1.4.8",
   "private": true,
   "description": "A simple and elegant sudoku game for the web with no ads or tracking.",
   "author": "Matt Roxburgh",
