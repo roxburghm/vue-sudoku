@@ -10,6 +10,11 @@
             <SettingItem icon="mdi-theme-light-dark" label="Dark theme">
                 <v-switch color="sudoku" v-model="darkTheme"/>
             </SettingItem>
+            <SettingItem icon="mdi-palette" label="Color">
+                <color-swatch
+                        class="mr-2 my-4"
+                        :color="color" :key="color" v-for="color in colors" @click="selectThemeColor(color)"/>
+            </SettingItem>
 
             <SettingItem icon="mdi-check" label="Allow validation">
                 <v-switch color="sudoku" v-model="allowValidation"/>
@@ -27,10 +32,10 @@
                 <v-switch color="sudoku" v-model="highlightSingleNote"/>
             </SettingItem>
 
-            <SettingItem icon="mdi-timer-outline" label="Show countdown bar">
+            <SettingItem icon="mdi-timer-outline" label="Show countdown timer bar">
                 <v-switch color="sudoku" v-model="showCountdown"/>
             </SettingItem>
-            <SettingItem icon="mdi-gesture-swipe-right" label="Drag across board to scrub notes">
+            <SettingItem icon="mdi-gesture-swipe-right" label="Drag across board to clear notes">
                 <v-switch color="sudoku" v-model="dragToScrub"/>
             </SettingItem>
         </v-sheet>
@@ -39,16 +44,27 @@
 <script>
 
 import SettingItem from "@/views/SettingItem.vue";
+import Themer from "@/plugins/themer";
+import ColorSwatch from "@/views/ColorSwatch.vue";
 
 export default {
     name: 'HighScores',
-    components: {SettingItem},
+    components: {ColorSwatch, SettingItem},
     data() {
         return {
             showHighScores: false
         }
     },
+    methods: {
+        selectThemeColor(color) {
+            this.$store.commit('themeColor', color);
+            Themer.SetThemeColor(color, this.$vuetify);
+        }
+    },
     computed: {
+        colors() {
+            return Themer.AvailableThemes;
+        },
         darkTheme: {
             get() {
                 return this.$store.state.themeDark

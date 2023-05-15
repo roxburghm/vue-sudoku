@@ -6,7 +6,7 @@
     <v-col cols="8" class="text-left align-center d-flex">
         <v-icon class="pr-4">{{ icon }}</v-icon> {{ label  }}
     </v-col>
-    <v-col class="text-right justify-end d-flex">
+    <v-col cols="4" class="text-right justify-end d-flex">
         <slot />
     </v-col>
     </v-row>

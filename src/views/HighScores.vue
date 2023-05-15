@@ -1,13 +1,11 @@
 <template>
     <v-sheet class="px-2 py-4">
         <div class="text-center">
-            <div class="headline">{{ praise }}</div>
+            <div class="headline font-weight-light">{{ praise }}</div>
             <div class="my-6">
                 <div class="my-6">
-                    <v-icon v-if="highScore" color="pink darken-1" size="128">mdi-cupcake</v-icon>
-                    <v-avatar v-else size="128">
-                        <v-img contain width="128" :src="`/images/logoFor${theme}.png`"/>
-                    </v-avatar>
+                    <sudoku-logo v-if="highScore || true"  icon="mdi-cupcake" size="128"/>
+                    <sudoku-logo v-else size="128"/>
                 </div>
                 <div class="my-4">
                     <v-chip outlined large class="px-6" color="black">Your time in {{ level }} mode <span
@@ -19,9 +17,9 @@
 
                 <v-carousel v-model="showLevel" :show-arrows="false" :continuous="false"
                             hide-delimiter-background hide-delimiters height="360">
-                    <v-carousel-item v-for="hLevel in levels" :key="`level-${hLevel}`" class="red">
-                        <v-sheet>
-                            <div class="headline mb-2 text-capitalize">High Scores - {{ hLevel }} Mode</div>
+                    <v-carousel-item v-for="hLevel in levels" :key="`level-${hLevel}`">
+                        <v-sheet elevation="0">
+                            <div class="headline mb-2 text-capitalize font-weight-light sudoku sudoku-cell-color--text">High Scores - {{ hLevel }} Mode</div>
                             <v-simple-table dense style="max-width: 500px" class="mx-auto">
                                 <tbody>
                                 <tr v-for="(entry, index) in getHighScoresForLevel(hLevel)" :key="`tr-${index}`"
@@ -38,7 +36,7 @@
                         </v-sheet>
                     </v-carousel-item>
                 </v-carousel>
-                <v-btn outlined class="mt-4" :to="{ name: 'GameView' }">Restart</v-btn>
+                <v-btn outlined tabindex="-1" class="mt-4" @click="restart">Restart</v-btn>
             </div>
         </div>
     </v-sheet>
@@ -47,12 +45,13 @@
 import ElapsedTime from "@/components/ElapsedTime.vue";
 import {SudokuLevels} from "@/plugins/sudoku";
 import CloneDeep from 'lodash/cloneDeep';
+import SudokuLogo from "@/views/SudokuLogo.vue";
 
 const NO_OF_HIGH_SCORES = 10;
 
 export default {
     name: 'HighScores',
-    components: {ElapsedTime},
+    components: {SudokuLogo, ElapsedTime},
     data() {
         return {
             showHighScores: false,
@@ -73,6 +72,9 @@ export default {
             }
             return scores;
         },
+        restart() {
+            this.$router.push({ name: 'GameView' })
+        }
     },
     computed: {
         highScore() {
@@ -92,8 +94,8 @@ export default {
 </script>
 <style scoped>
 .its-me {
-    color: var(--v-sudoku-cell-selected-text-color-base);
-    background-color: var(--v-sudoku-cell-selected-color-base);
+    color: var(--v-sudoku-cell-color-base);
+    background-color: var(--v-sudoku-base);
 }
 
 .placement {

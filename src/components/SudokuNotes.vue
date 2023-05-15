@@ -35,7 +35,7 @@ td {
     height: calc(var(--sudoku-cell-size) * 0.24);
 }
 .highlight-note {
-    background-color: var(--v-sudoku-cell-highlighted-color-base);
+    background-color: var(--v-sudoku-base);
     border-radius: 10%;
     color:white;
 }

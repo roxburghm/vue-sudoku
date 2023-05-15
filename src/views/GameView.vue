@@ -1,9 +1,7 @@
 <template>
     <div class="d-block fill-height">
-        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeftHighScore" reverse
-                           color="sudoku-progress" :background-opacity="0"/>
-        <v-progress-linear v-if="showCountdown" :value="pcntTimeLeftTopScore" reverse
-                           color="sudoku-progress-high-score" :background-opacity="0"/>
+        <v-progress-linear absolute top v-if="showCountdown" :value="pcntTimeLeftTopScore" reverse
+                          :buffer-value="pcntTimeLeftHighScore" :stream="pcntTimeLeftHighScore > 0" color="sudoku" />
 
         <div v-if="!ready" class="fill-height align-center text-center justify-center d-flex flex-column">
             <div>
@@ -17,7 +15,7 @@
                 <elapsed-time :seconds="$store.state.secondsTaken"/>
             </v-chip>
             <div v-if="paused">
-            <v-icon @click="$store.commit('togglePaused')" class="grid-size overflow-hidden">mdi-pause-circle-outline</v-icon>
+            <v-icon @click="$store.commit('togglePaused')" class="grid-size overflow-hidden" color="sudoku">mdi-pause-circle-outline</v-icon>
             </div>
             <sudoku-grid v-else/>
             <sudoku-keypad @difficulty="difficultySelect"/>
@@ -115,11 +113,13 @@ export default {
             return this.$store.state.highScores[this.level][0].time;
         },
         pcntTimeLeftTopScore() {
+            if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 30;
             if (this.slowestTime === 0) return 0;
             let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.fastestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
         },
         pcntTimeLeftHighScore() {
+            if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 60;
             if (this.slowestTime === 0) return 0;
             let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.slowestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
@@ -133,6 +133,6 @@ export default {
 
 <style>
 .grid-size {
-    font-size: calc(var(--sudouku-block-border) * 2 + var(--sudouku-cell-border) * 6 + var(--sudoku-cell-size) * 9 + var(--sudouku-grid-border-overhang) * 2)  !important;
+    font-size: calc(var(--sudoku-block-border) * 2 + var(--sudoku-cell-border-size) * 6 + var(--sudoku-cell-size) * 9 + var(--sudoku-grid-border-overhang) * 2)  !important;
 }
 </style>

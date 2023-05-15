@@ -1,15 +1,6 @@
 :root {
-    --v-sudoku-cell-selected-color-base: '#000';
-    --v-sudoku-cell-selected-text-color-base: '#000';
-    --v-sudoku-cell-highlighted-color-base: '#000';
-    --v-sudoku-cell-highlighted-text-color-base: '#000';
-    --v-sudoku-cell-incorrect-color-base: '#000';
-    --v-sudoku-cell-incorrect-text-color-base: '#000';
-    --v-sudoku-btn-complete-selected-color-base: '#000';
-    --v-sudoku-btn-complete-color-base: '#000';
-    --v-sudoku-cell-locked-color-base: '#000';
-    --v-sudoku-cell-locked-text-color-base: '#000';
-    --v-sudoku-cell-text-color-base: '#000';
-    --v-sudoku-cell-color-base: '#000';
-    --v-sudoku-cell-single-note-color-base: '#000';
+    --v-sudoku-base: #000;
+    --v-sudoku-cell-color-base: #000;
+    --v-neutral-lighten1: #000;
+    --v-neutral-lighten3: #000;
 }

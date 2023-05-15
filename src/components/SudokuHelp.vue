@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title class="justify-center headline">Help</v-card-title>
-        <v-card-text>
+        <v-card-text class="font-weight-light">
             <v-divider/>
             <v-simple-table>
                 <tbody>

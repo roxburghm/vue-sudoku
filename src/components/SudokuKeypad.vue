@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="{ 'disabled': paused}">
         <v-divider class="my-3" v-shortkey="{ up: ['arrowup'], down: ['arrowdown'], left: ['arrowleft'], right: ['arrowright']}" @shortkey="cursorMove" />
         <div class="d-flex flex-row justify-center">
             <sudoku-key :small="isSmallButton" @click="toggleDigit(1)" :digit="1" :selected="1 === selectedDigit" :shortcut="['1']"/>
@@ -91,9 +91,9 @@ export default {
         autoNotes() {
             this.$store.commit('pushGameHistory');
             this.$store.dispatch('autoNotes');
-            // if (process.env.NODE_ENV === 'development') {
-            //     this.$store.dispatch('autoPass');
-            // }
+            if (process.env.VUE_APP_TEST_AUTO_PASS) {
+                 this.$store.dispatch('autoPass');
+            }
 
             this.$store.dispatch('saveGame');
         },
@@ -126,3 +126,8 @@ export default {
 }
 </script>
 
+<style scoped>
+.disabled {
+    opacity: 0.3;
+}
+</style>

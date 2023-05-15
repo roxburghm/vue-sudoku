@@ -105,12 +105,10 @@ export default {
 :root {
 
   --sudoku-cell-size: 55px;
-  --sudouku-block-border: 4px;
-  --sudouku-cell-border: 1px;
-  --sudouku-block-border-color: #20a8e7;
-  --sudouku-cell-border-color: grey;
-  --sudouku-grid-border: 4px;
-  --sudouku-grid-border-overhang: 8px;
+  --sudoku-block-border: 4px;
+  --sudoku-cell-border-size: 1px;
+  --sudoku-grid-border: 4px;
+  --sudoku-grid-border-overhang: 8px;
 }
 
 @media #{map-get($display-breakpoints, 'xs-only')} {
@@ -122,32 +120,32 @@ export default {
 
 <style scoped>
 .sudoku-block-1-1, .sudoku-block-1-2, .sudoku-block-1-3 {
-    padding-top: var(--sudouku-grid-border-overhang);
+    padding-top: var(--sudoku-grid-border-overhang);
 }
 
 .sudoku-block-3-1, .sudoku-block-3-2, .sudoku-block-3-3 {
-    padding-bottom: var(--sudouku-grid-border-overhang);
+    padding-bottom: var(--sudoku-grid-border-overhang);
 }
 
 .sudoku-block-1-1, .sudoku-block-2-1, .sudoku-block-3-1 {
-    padding-left: var(--sudouku-grid-border-overhang);
+    padding-left: var(--sudoku-grid-border-overhang);
 }
 
 .sudoku-block-1-3, .sudoku-block-2-3, .sudoku-block-3-3 {
-    padding-right: var(--sudouku-grid-border-overhang);
+    padding-right: var(--sudoku-grid-border-overhang);
 }
 
 .sudoku-block-1-1, .sudoku-block-1-2, .sudoku-block-2-1, .sudoku-block-2-2 {
-    border-right: var(--sudouku-block-border) solid var(--sudouku-block-border-color);
-    border-bottom: var(--sudouku-block-border) solid var(--sudouku-block-border-color);
+    border-right: var(--sudoku-block-border) solid var(--v-sudoku-base);
+    border-bottom: var(--sudoku-block-border) solid var(--v-sudoku-base);
 }
 
 .sudoku-block-3-1, .sudoku-block-3-2 {
-    border-right: var(--sudouku-block-border) solid var(--sudouku-block-border-color);
+    border-right: var(--sudoku-block-border) solid var(--v-sudoku-base);
 }
 
 .sudoku-block-1-3, .sudoku-block-2-3 {
-    border-bottom: var(--sudouku-block-border) solid var(--sudouku-block-border-color);
+    border-bottom: var(--sudoku-block-border) solid var(--v-sudoku-base);
 }
 
 </style>

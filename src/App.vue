@@ -2,9 +2,7 @@
     <v-app>
         <v-app-bar flat app :dark="$store.state.themeDark" light>
             <div class="d-flex align-center">
-                <v-img alt="Sudoku" class="shrink mr-2" contain :src="`/images/logoFor${theme}.png`"
-                       transition="scale-transition" width="40"
-                />
+                <sudoku-logo :size="40" />
                 <span class="headline font-weight-light ml-2 grey--text">Sudoku</span>
 
             </div>
@@ -60,24 +58,47 @@
 
 import SudokuHelp from "@/components/SudokuHelp.vue";
 import swmixin from "@/plugins/swmixin";
+import SudokuLogo from "@/views/SudokuLogo.vue";
+import Themer from "@/plugins/themer";
 
 export default {
     name: 'App',
     mixins: [swmixin],
-    components: {SudokuHelp},
+    components: {SudokuLogo, SudokuHelp},
     mounted() {
         this.$vuetify.theme.dark = this.$store.state.themeDark;
+        Themer.SetThemeColor(this.$store.state.themeColor, this.$vuetify);
     },
     data: () => ({
         isHelpVisible: false,
     }),
     methods: {
+        toggleTheme() {
+            this.$store.commit('themeDark', !this.$store.state.themeDark);
+            this.$vuetify.theme.dark = this.$store.state.themeDark;
+        },
         togglePause() {
             this.$store.commit('togglePaused');
         },
         swapTheme() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
             this.$store.commit('themeDark', this.$vuetify.theme.dark);
+        },
+        selectThemeColor(color) {
+            this.$store.commit('themeColor', color);
+        },
+    },
+    computed: {
+        colors() {
+            return Themer.AvailableThemes
+        }
+    },
+    watch: {
+        '$store.state.themeColor': {
+            handler(newValue) {
+                console.log('theme color changed', newValue)
+                Themer.SetThemeColor(newValue, this.$vuetify);
+            }
         }
     }
 };

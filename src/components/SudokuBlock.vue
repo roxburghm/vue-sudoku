@@ -2,7 +2,7 @@
     <div class="d-inline-block sudoku-block">
         <div v-for="cellRow in [1,2,3]" :key="`cr-${cellRow}`" class="sudoku-row">
         <sudoku-cell v-for="cellCol in [1,2,3]" :key="`cc-${cellCol}`"
-                     class="sudoku-cell" :transparent-cells="transparentCells"
+                     class="sudoku-cell-container" :transparent-cells="transparentCells"
                      :class="`sudoku-cell-${cellRow}-${cellCol}`"
                      :index="cellIndex(cellRow, cellCol)"/>
         </div>
@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 
-.sudoku-cell {
+.sudoku-cell-container {
     vertical-align:top;
 }
 
@@ -41,16 +41,16 @@ export default {
 }
 
 .sudoku-cell-1-1, .sudoku-cell-1-2, .sudoku-cell-2-1, .sudoku-cell-2-2 {
-    border-right: var(--sudouku-cell-border) solid var(--sudouku-cell-border-color);
-    border-bottom: var(--sudouku-cell-border) solid var(--sudouku-cell-border-color);
+    border-right: var(--sudoku-cell-border-size) solid var(--v-neutral-lighten1);
+    border-bottom: var(--sudoku-cell-border-size) solid var(--v-neutral-lighten1);
 }
 
 .sudoku-cell-1-3, .sudoku-cell-2-3 {
-    border-bottom: var(--sudouku-cell-border) solid var(--sudouku-cell-border-color)
+    border-bottom: var(--sudoku-cell-border-size) solid var(--v-neutral-lighten1)
 }
 
 .sudoku-cell-3-1, .sudoku-cell-3-2 {
-    border-right: var(--sudouku-cell-border) solid var(--sudouku-cell-border-color);
+    border-right: var(--sudoku-cell-border-size) solid var(--v-neutral-lighten1);
 }
 
 </style>

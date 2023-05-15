@@ -17,6 +17,7 @@ const LS_SUDOKU_HISTORY = 'SudokuHistory';
 const LS_SUDOKU_LEVEL = 'SudokuLevel';
 const LS_SUDOKU_GAME_ID = 'SudokuGameId';
 const LS_SUDOKU_THEME_DARK = 'SudokuThemeDark';
+const LS_SUDOKU_THEME_COLOR = 'SudokuThemeColor';
 const LS_SUDOKU_ALLOW_VALIDATION = 'SudokuAllowValidation';
 const LS_SUDOKU_FINISHED = 'SudokuFinished';
 const LS_SUDOKU_HIGH_SCORE = 'SudokuHighScore';
@@ -91,6 +92,7 @@ export default new Vuex.Store({
             return new SudokuCell('', false)
         }),
         themeDark: _getBooleanFromLS(LS_SUDOKU_THEME_DARK, false),
+        themeColor: _getStringFromLS(LS_SUDOKU_THEME_COLOR, 'blue'),
         level: _getStringFromLS(LS_SUDOKU_LEVEL, SudokuLevels.EASY),
         secondsTaken: parseInt(_getStringFromLS(LS_SUDOKU_SECONDS_TAKEN, 0)),
         validation: false,
@@ -146,9 +148,12 @@ export default new Vuex.Store({
             _setStringToLS(LS_SUDOKU_GAME_ID, state.gameId)
         },
         themeDark(state, payload) {
-            console.log('themeDark', payload)
             state.themeDark = payload;
             _setBooleanToLS(LS_SUDOKU_THEME_DARK, state.themeDark)
+        },
+        themeColor(state, payload) {
+            state.themeColor = payload;
+            _setStringToLS(LS_SUDOKU_THEME_COLOR, state.themeColor)
         },
         finished(state, payload) {
             state.finished = payload;
@@ -296,6 +301,13 @@ export default new Vuex.Store({
             console.log('auto pass');
             for (let cellIdx in state.cells) {
                 commit('setCellGuess', {cellIndex: cellIdx, guess: state.cells[cellIdx].actual})
+            }
+            for (let cellIdx of [80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65]) {
+                if (!state.cells[cellIdx].locked) {
+                    commit('setCellGuess', {cellIndex: cellIdx, guess: ''})
+                    commit('selectedDigit', state.cells[cellIdx].actual)
+                    break;
+                }
             }
         },
         autoTrimNotes({state, commit}, {cellIndex, guess}) {

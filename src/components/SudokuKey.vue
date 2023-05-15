@@ -1,9 +1,9 @@
 <template>
     <div class="d-flex mx-2 my-1">
         <div class="btn-progress-container">
-            <v-btn icon :selected="selected" x-large v-shortkey="shortcut" @shortkey="shortcutPressed">
+            <v-btn icon :disabled="paused" :selected="selected" x-large v-shortkey="shortcut" @shortkey="shortcutPressed">
         <v-progress-circular :class="{ 'btn-selected': selected, 'btn-complete' : isComplete }"
-            :value="progress" rotate="-90"
+                             :value="progress" rotate="-90"
                              :size="progressSize" width="2" :color="progressColour"
                  @click="$emit('click')">
                 <v-icon v-if="icon">{{icon}}</v-icon>
@@ -42,7 +42,7 @@ export default {
             return this.digit >= 0;
         },
         progressColour() {
-            return this.countDigits > 9 ? 'warning' : 'light-blue';
+            return this.countDigits > 9 ? 'warning' : 'sudoku';
         },
         progress() {
             if (this.digit <= 0) return 0;
@@ -84,21 +84,21 @@ export default {
 <style scoped>
 
 .v-progress-circular.btn-selected {
-    background-color:  var(--v-sudoku-cell-selected-color-base);
+    background-color:  var(--v-sudoku-base);
     border-radius: 50%;
-    color: var(--v-sudoku-cell-selected-text-color-base) !important;
+    color: var(--v-sudoku-cell-color-base) !important;
 }
 
 .v-progress-circular.btn-selected.btn-complete {
-    background-color:  var(--v-sudoku-btn-complete-selected-color-base);
+    background-color:  var(--v-sudoku-base);
     border-radius: 50%;
-    color: var(--v-sudoku-cell-selected-text-color-base) !important;
+    color: var(--v-sudoku-cell-color-base);
 }
 
 .v-progress-circular.btn-complete {
-    background-color:  var(--v-sudoku-btn-complete-color-base);
+    background-color:  var(--v-neutral-lighten3);
     border-radius: 50%;
-    color: var(--v-sudoku-cell-selected-text-color-base) !important;
+    color: var(--v-sudoku-cell-color-base) !important;
 }
 
 .v-btn {
