@@ -90,7 +90,7 @@ export default {
         },
         autoNotes() {
             this.$store.commit('pushGameHistory');
-            this.$store.dispatch(this.hasNotes ? 'clearNotes', 'autoNotes');
+            this.$store.dispatch(this.hasNotes ? 'clearNotes' : 'autoNotes');
             if (process.env.VUE_APP_TEST_AUTO_PASS) {
                  this.$store.dispatch('autoPass');
             }
