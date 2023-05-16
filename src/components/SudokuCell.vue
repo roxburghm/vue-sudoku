@@ -55,12 +55,19 @@ export default {
         toggleCellSelect() {
             if (this.cellLocked) return;
             if (this.selectedDigit < 0) {
-                this.selectedCell = this.selectedCell === this.index ? -1 : this.index;
-            } else {
-                this.$store.commit('pushGameHistory');
-                this.toggleCellGuessOrNote(this.index, this.selectedDigit)
-                this.$store.dispatch('saveGame');
+                if (this.canCompleteSingleNote) {
+                    let notes = this.cells[this.index].notes;
+                    let note = notes.reduce((acc, value, note) => Math.max(acc, value ? note + 1 : 0));
+                    this.$store.commit('selectedDigit', note);
+                } else {
+                    this.selectedCell = this.selectedCell === this.index ? -1 : this.index;
+                    return;
+                }
             }
+
+            this.$store.commit('pushGameHistory');
+            this.toggleCellGuessOrNote(this.index, this.selectedDigit)
+            this.$store.dispatch('saveGame');
         },
         containsDigit(digit) {
             if (digit) {
@@ -70,6 +77,13 @@ export default {
         },
     },
     computed: {
+        canCompleteSingleNote() {
+            return this.noteCount === 1
+                && this.selectedCell === this.index
+                && this.$store.state.completeSingleNote
+                && !this.$store.state.isNotesMode
+                && this.cells[this.index].guess === ''
+        },
         isTransparent() {
             return this.localTransparentCells.includes(`${this.index}`);
         },
@@ -238,9 +252,11 @@ export default {
   .sudoku-cell.cell-transparent {
     background-color: var(--v-primary-darken2);
   }
+
   .sudoku-cell.cell-locked {
     background-color: var(--v-sudoku-cell-color-lighten2);
   }
+
   .sudoku-cell.cell-locked .sudoku-cell-indicator {
     background-color: var(--v-sudoku-cell-color-lighten2);
   }

@@ -38,6 +38,9 @@
             <SettingItem icon="mdi-gesture-swipe-right" label="Drag across board to clear notes">
                 <v-switch color="sudoku" v-model="dragToScrub"/>
             </SettingItem>
+            <SettingItem icon="mdi-auto-fix" label="Complete single notes on double tap">
+                <v-switch color="sudoku" v-model="completeSingleNote"/>
+            </SettingItem>
         </v-sheet>
     </v-container>
 </template>/
@@ -64,6 +67,14 @@ export default {
     computed: {
         colors() {
             return Themer.AvailableThemes;
+        },
+        completeSingleNote: {
+            get() {
+                return this.$store.state.completeSingleNote
+            },
+            set(value) {
+                this.$store.commit('completeSingleNote', value);
+            }
         },
         darkTheme: {
             get() {

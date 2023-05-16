@@ -25,6 +25,7 @@ const LS_SUDOKU_ALLOW_AUTO_NOTES = 'SudokuAllowAutoNotes';
 const LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE = 'SudokuVibrateOnDigitComplete';
 const LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE = 'SudokuHighlightSingleNote';
 const LS_SUDOKU_DRAG_TO_SCRUB = 'SudokuDragToScrub';
+const LS_SUDOKU_COMPLETE_SINGLE_NOTE = 'SudokuCompleteSingleNote';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -114,8 +115,13 @@ export default new Vuex.Store({
         highlightSingleNote: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
         showCountdown: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
         dragToScrub: _getBooleanFromLS(LS_SUDOKU_DRAG_TO_SCRUB, true),
+        completeSingleNote: _getBooleanFromLS(LS_SUDOKU_COMPLETE_SINGLE_NOTE, false),
     },
     mutations: {
+        completeSingleNote(state, payload) {
+            state.completeSingleNote = payload;
+            _setBooleanToLS(LS_SUDOKU_COMPLETE_SINGLE_NOTE, state.completeSingleNote)
+        },
         togglePaused(state) {
             state.paused = !state.paused;
         },
