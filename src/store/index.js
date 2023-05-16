@@ -303,6 +303,12 @@ export default new Vuex.Store({
                 commit('setCellNotes', {cellIndex: cellIdx, notes: notes})
             }
         },
+        clearNotes({state, commit}) {
+            for (let cellIdx in state.cells) {
+                const notes = [false,false, false,false,false, false,false,false, false];
+                commit('setCellNotes', {cellIndex: cellIdx, notes: notes})
+            }
+        },
         autoPass({state, commit}) {
             console.log('auto pass');
             for (let cellIdx in state.cells) {
