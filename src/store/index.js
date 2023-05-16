@@ -26,6 +26,7 @@ const LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE = 'SudokuVibrateOnDigitComplete';
 const LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE = 'SudokuHighlightSingleNote';
 const LS_SUDOKU_DRAG_TO_SCRUB = 'SudokuDragToScrub';
 const LS_SUDOKU_COMPLETE_SINGLE_NOTE = 'SudokuCompleteSingleNote';
+const LS_SUDOKU_HIDE_COFFEE = 'SudokuHideCoffee';
 const NO_OF_HIGH_SCORES = 10;
 const LS_SUDOKU_HIGH_SCORES = 'SudokuHighScores';
 
@@ -42,6 +43,9 @@ function _getHighScoresFromLS() {
 
 function _alertCompleted() {
     navigator.vibrate(100);
+}
+function _alertError() {
+    navigator.vibrate(50, 100, 50);
 }
 
 function _saveHighScoresToLS(highScores) {
@@ -115,9 +119,14 @@ export default new Vuex.Store({
         highlightSingleNote: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
         showCountdown: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
         dragToScrub: _getBooleanFromLS(LS_SUDOKU_DRAG_TO_SCRUB, true),
+        hideCoffee: _getBooleanFromLS(LS_SUDOKU_HIDE_COFFEE, false),
         completeSingleNote: _getBooleanFromLS(LS_SUDOKU_COMPLETE_SINGLE_NOTE, false),
     },
     mutations: {
+        hideCoffee(state, payload) {
+            state.hideCoffee = payload;
+            _setBooleanToLS(LS_SUDOKU_HIDE_COFFEE, state.hideCoffee)
+        },
         completeSingleNote(state, payload) {
             state.completeSingleNote = payload;
             _setBooleanToLS(LS_SUDOKU_COMPLETE_SINGLE_NOTE, state.completeSingleNote)
@@ -244,6 +253,9 @@ export default new Vuex.Store({
             puzzleChanged(this);
             if (state.vibrateOnDigitComplete && state.digitCounts[guess - 1] === 9) {
                 _alertCompleted()
+            }
+            if (state.validation && parseInt(state.cells[cellIndex].guess) !== parseInt(state.cells[cellIndex].actual)) {
+                _alertError();
             }
         },
         clearCellGuess(state, {cellIndex}) {

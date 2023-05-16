@@ -4,7 +4,11 @@
             <div class="headline font-weight-light">{{ praise }}</div>
             <div class="my-6">
                 <div class="my-6">
-                    <sudoku-logo v-if="highScore"  icon="mdi-cupcake" :size="128" color="gold" class="breathe-gold"/>
+                    <div v-if="highScore">
+                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe-gold"/>
+                    <sudoku-logo icon="mdi-cupcake" :size="128" color="gold" class="breathe-gold mx-6"/>
+                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe-gold"/>
+                    </div>
                     <sudoku-logo v-else :size="128" :rotated="false" icon="mdi-check-circle-outline" class="breathe"/>
                 </div>
                 <div class="my-4">
@@ -74,11 +78,14 @@ export default {
         },
         restart() {
             this.$router.push({ name: 'GameView' })
+        },
+        myPosition() {
+            return this.getHighScoresForLevel(this.level).findIndex(entry => entry.gameId === this.gameId) +1;
         }
     },
     computed: {
         highScore() {
-            return this.$store.state.highScore
+            return this.myPosition() > 0;
         },
         gameId() {
             return this.$store.state.gameId

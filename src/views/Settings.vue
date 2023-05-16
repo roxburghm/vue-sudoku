@@ -1,12 +1,10 @@
 <template>
     <v-container class="justify-center d-flex">
         <v-sheet max-width="600" class="px-4 transparent">
-            <div class="headline my-8">
-                <v-btn class="mr-4" :to="{name: 'GameView'}" icon>
-                    <v-icon>mdi-arrow-left</v-icon>
-                </v-btn>
-                Settings
+            <div class="headline font-weight-light">
+                UI Settings
             </div>
+            <p class="font-weight-light caption">Change the way the app looks and feels.</p>
             <SettingItem icon="mdi-theme-light-dark" label="Dark theme">
                 <v-switch color="sudoku" v-model="darkTheme"/>
             </SettingItem>
@@ -15,7 +13,22 @@
                         class="mr-2 my-4"
                         :color="color" :key="color" v-for="color in colors" @click="selectThemeColor(color)"/>
             </SettingItem>
+            <SettingItem icon="mdi-vibrate" label="Vibrate on digit complete">
+                <v-switch color="sudoku" v-model="vibrateOnDigitComplete"/>
+            </SettingItem>
+            <SettingItem icon="mdi-timer-outline" label="Show countdown timer bar">
+                <v-switch color="sudoku" v-model="showCountdown"/>
+            </SettingItem>
+            <SettingItem icon="mdi-gesture-swipe-right" label="Drag across board to clear notes">
+                <v-switch color="sudoku" v-model="dragToScrub"/>
+            </SettingItem>
 
+
+
+            <div class="headline font-weight-light mt-4">
+                Assistive Settings
+            </div>
+            <p class="font-weight-light caption">Settings that make playing the game easier.</p>
             <SettingItem icon="mdi-check" label="Allow validation">
                 <v-switch color="sudoku" v-model="allowValidation"/>
             </SettingItem>
@@ -24,22 +37,20 @@
                 <v-switch color="sudoku" v-model="allowAutoNotes"/>
             </SettingItem>
 
-            <SettingItem icon="mdi-vibrate" label="Vibrate on digit complete">
-                <v-switch color="sudoku" v-model="vibrateOnDigitComplete"/>
-            </SettingItem>
-
             <SettingItem icon="mdi-marker" label="Highlight notes containing single value">
                 <v-switch color="sudoku" v-model="highlightSingleNote"/>
             </SettingItem>
 
-            <SettingItem icon="mdi-timer-outline" label="Show countdown timer bar">
-                <v-switch color="sudoku" v-model="showCountdown"/>
-            </SettingItem>
-            <SettingItem icon="mdi-gesture-swipe-right" label="Drag across board to clear notes">
-                <v-switch color="sudoku" v-model="dragToScrub"/>
-            </SettingItem>
             <SettingItem icon="mdi-auto-fix" label="Complete single notes on double tap">
                 <v-switch color="sudoku" v-model="completeSingleNote"/>
+            </SettingItem>
+
+            <div class="headline font-weight-light mt-4">
+                Buy Me A Coffee
+            </div>
+            <p class="font-weight-light caption">Like the app? Show your appreciation and buy me a coffee, but if you don't want to that's fine - you can turn off the coffee cup icon here. </p>
+            <SettingItem icon="mdi-coffee-to-go-outline" label="Hide buy me a coffee icon">
+                <v-switch color="sudoku" v-model="hideCoffee"/>
             </SettingItem>
         </v-sheet>
     </v-container>
@@ -67,6 +78,14 @@ export default {
     computed: {
         colors() {
             return Themer.AvailableThemes;
+        },
+        hideCoffee: {
+            get() {
+                return this.$store.state.hideCoffee
+            },
+            set(value) {
+                this.$store.commit('hideCoffee', value);
+            }
         },
         completeSingleNote: {
             get() {

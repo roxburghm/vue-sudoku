@@ -2,17 +2,24 @@
     <v-app>
         <v-app-bar flat app :dark="$store.state.themeDark" light>
             <div class="d-flex align-center">
-                <sudoku-logo :size="40" />
+                <sudoku-logo :size="40"/>
                 <span class="headline font-weight-light ml-2 grey--text">Sudoku</span>
 
             </div>
 
             <v-spacer></v-spacer>
             <div class="text-no-wrap">
-                <v-btn @click="togglePause" icon v-show="$route.name === 'GameView'" large class="mr-4">
+                <a v-if="showCoffee"
+                   href="https://www.buymeacoffee.com/matthewroxburgh" target="_blank" rel="noopener noreferrer"
+                   class="text-decoration-none">
+                    <v-btn icon large class="mr-2">
+                        <v-icon>mdi-coffee-to-go-outline</v-icon>
+                    </v-btn>
+                </a>
+                <v-btn @click="togglePause" icon v-show="$route.name === 'GameView'" large class="mr-2">
                     <v-icon>mdi-pause</v-icon>
                 </v-btn>
-                <v-btn icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-4">
+                <v-btn :color="$route.name === 'Settings' ? 'sudoku' : null" icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-2">
                     <v-icon>mdi-cog</v-icon>
                 </v-btn>
                 <v-btn icon @click="isHelpVisible = true" large
@@ -91,19 +98,25 @@ export default {
     computed: {
         colors() {
             return Themer.AvailableThemes
-        }
+        },
+        showCoffee() {
+            return !this.$store.state.hideCoffee;
+        },
     },
     watch: {
-        '$store.state.themeColor': {
-            handler(newValue) {
-                console.log('theme color changed', newValue)
-                Themer.SetThemeColor(newValue, this.$vuetify);
+        '$store.state.themeColor':
+            {
+                handler(newValue) {
+                    console.log('theme color changed', newValue)
+                    Themer.SetThemeColor(newValue, this.$vuetify);
+                }
             }
-        }
     }
-};
+}
+;
 </script>
 
+<!--suppress CssUnusedSymbol -->
 <style>
 body {
     user-select: none;
@@ -125,7 +138,7 @@ body {
     animation: breathing 3s ease-out infinite normal;
 }
 
-@keyframes breathing  {
+@keyframes breathing {
     0% {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 var(--v-sudoku-base)
@@ -146,7 +159,7 @@ body {
     animation: breathing-gold 3s ease-out infinite normal;
 }
 
-@keyframes breathing-gold  {
+@keyframes breathing-gold {
     0% {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 var(--v-gold-lighten1);
