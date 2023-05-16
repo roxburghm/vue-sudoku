@@ -45,7 +45,7 @@ function _alertCompleted() {
     navigator.vibrate(100);
 }
 function _alertError() {
-    navigator.vibrate(50, 100, 50);
+    navigator.vibrate([50, 100, 50]);
 }
 
 function _saveHighScoresToLS(highScores) {
