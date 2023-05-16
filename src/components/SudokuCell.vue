@@ -54,11 +54,12 @@ export default {
     methods: {
         toggleCellSelect() {
             if (this.cellLocked) return;
-            if (this.selectedDigit < 0) {
+            let digit = this.selectedDigit;
+            if (digit < 0) {
                 if (this.canCompleteSingleNote) {
                     let notes = this.cells[this.index].notes;
                     let note = notes.reduce((acc, value, note) => Math.max(acc, value ? note + 1 : 0));
-                    this.$store.commit('selectedDigit', note);
+                    digit = note;
                 } else {
                     this.selectedCell = this.selectedCell === this.index ? -1 : this.index;
                     return;
@@ -66,7 +67,7 @@ export default {
             }
 
             this.$store.commit('pushGameHistory');
-            this.toggleCellGuessOrNote(this.index, this.selectedDigit)
+            this.toggleCellGuessOrNote(this.index, digit)
             this.$store.dispatch('saveGame');
         },
         containsDigit(digit) {
