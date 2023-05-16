@@ -90,7 +90,7 @@ export default {
         },
         autoNotes() {
             this.$store.commit('pushGameHistory');
-            this.$store.dispatch('autoNotes');
+            this.$store.dispatch(this.hasNotes ? 'clearNotes', 'autoNotes');
             if (process.env.VUE_APP_TEST_AUTO_PASS) {
                  this.$store.dispatch('autoPass');
             }
@@ -113,6 +113,9 @@ export default {
         }
     },
     computed: {
+        hasNotes() {
+return this.cells.reduce((acc, value) => { return acc || value.notes.reduce((acc, value) => acc || value, false)}, false);
+        },
         isSmallButton() {
             return this.$vuetify.breakpoint.smAndDown;
         },
