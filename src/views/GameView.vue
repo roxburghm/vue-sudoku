@@ -114,6 +114,9 @@ export default {
         },
     },
     computed: {
+        secondsTaken() {
+            return this.$store.state.secondsTaken;
+        },
         slowestTime() {
             let highScoreCount = this.$store.state.highScores[this.level].length;
             if (highScoreCount === 0) return 0;
@@ -126,13 +129,13 @@ export default {
         pcntTimeLeftTopScore() {
             if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 30;
             if (this.slowestTime === 0) return 0;
-            let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.fastestTime * 100);
+            let pcntTimeLeft = 100 - (this.secondsTaken / this.fastestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
         },
         pcntTimeLeftHighScore() {
             if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 60;
             if (this.slowestTime === 0) return 0;
-            let pcntTimeLeft = 100 - (this.$store.state.secondsTaken / this.slowestTime * 100);
+            let pcntTimeLeft = 100 - (this.secondsTaken / this.slowestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
         },
         showCountdown() {

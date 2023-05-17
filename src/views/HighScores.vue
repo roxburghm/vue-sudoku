@@ -42,7 +42,7 @@
                 </v-carousel>
                 <v-btn outlined tabindex="-1" class="mt-4" @click="restart">
                     <span v-if="solved">Start new game</span>
-                    <span>Resume game</span>
+                    <span v-else>Resume game</span>
                 </v-btn>
             </div>
         </div>
