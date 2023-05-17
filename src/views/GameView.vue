@@ -61,13 +61,8 @@ export default {
                 let secondsLeftForHighScore = this.fastestTime - seconds;
                 let secondsLeftForTopScore = this.slowestTime - seconds;
                 let remainingSeconds = secondsLeftForHighScore > 0 ? secondsLeftForHighScore : secondsLeftForTopScore;
-                if (remainingSeconds < 6) {
+                if (remainingSeconds > 0 && remainingSeconds < 6) {
                     navigator.vibrate(remainingSeconds ? 10 : 200);
-                }
-                if (seconds < this.sl) {
-                    this.$store.commit('ready', false);
-                    this.$store.commit('finished', true);
-                    this.$router.replace({name: 'HighScores'});
                 }
             },
             immediate: true
