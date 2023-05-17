@@ -117,7 +117,7 @@ export default new Vuex.Store({
         allowValidation: _getBooleanFromLS(LS_SUDOKU_ALLOW_VALIDATION, true),
         vibrateOnDigitComplete: _getBooleanFromLS(LS_SUDOKU_VIBRATE_ON_DIGIT_COMPLETE, true),
         highlightSingleNote: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
-        showCountdown: _getBooleanFromLS(LS_SUDOKU_HIGHLIGHT_ON_SINGLE_NOTE, true),
+        showCountdown: _getBooleanFromLS(LS_SUDOKU_SHOW_COUNTDOWN, true),
         dragToScrub: _getBooleanFromLS(LS_SUDOKU_DRAG_TO_SCRUB, true),
         hideCoffee: _getBooleanFromLS(LS_SUDOKU_HIDE_COFFEE, false),
         completeSingleNote: _getBooleanFromLS(LS_SUDOKU_COMPLETE_SINGLE_NOTE, false),
