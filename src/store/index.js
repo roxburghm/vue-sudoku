@@ -268,7 +268,10 @@ export default new Vuex.Store({
             }
         },
         clearCellGuess(state, {cellIndex}) {
-            state.cells[cellIndex].guess = '';
+            if (state.lockCorrectCells && parseInt(state.cells[cellIndex].guess) === parseInt(state.cells[cellIndex].actual)) {
+                return;
+            }
+                state.cells[cellIndex].guess = '';
             puzzleChanged(this);
         },
         setCellNotes(state, {cellIndex, notes}) {
