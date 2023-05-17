@@ -56,6 +56,22 @@ export default {
         document.removeEventListener('visibilitychange', this.handleVisibilityChange);
     },
     watch: {
+        secondsTaken: {
+            handler: function (seconds) {
+                let secondsLeftForHighScore = this.fastestTime - seconds;
+                let secondsLeftForTopScore = this.slowestTime - seconds;
+                let remainingSeconds = secondsLeftForHighScore > 0 ? secondsLeftForHighScore : secondsLeftForTopScore;
+                if (remainingSeconds < 6) {
+                    navigator.vibrate(remainingSeconds ? 10 : 200);
+                }
+                if (seconds < this.sl) {
+                    this.$store.commit('ready', false);
+                    this.$store.commit('finished', true);
+                    this.$router.replace({name: 'HighScores'});
+                }
+            },
+            immediate: true
+        },
         solved: {
             handler: function (solved) {
                 if (!this.$store.state.finished) {

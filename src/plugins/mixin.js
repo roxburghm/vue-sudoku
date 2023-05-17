@@ -27,8 +27,11 @@ export default {
         },
         toggleCellGuess(cellIndex, guess) {
             if (this.cells[cellIndex].locked) return;
+            if (!this.$store.state.lockCorrectCells ||
+                parseInt(this.cells[cellIndex].guess) !== parseInt(this.cells[cellIndex].actual)) {
+                this.$store.dispatch('autoTrimNotes', {cellIndex, guess});
+            }
             this.$store.commit('toggleCellGuess', {cellIndex: cellIndex, guess: guess});
-            this.$store.dispatch('autoTrimNotes', {cellIndex, guess});
             this.$store.dispatch('saveGame');
         },
         secondsToMMSS(seconds) {

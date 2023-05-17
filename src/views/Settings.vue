@@ -13,7 +13,7 @@
                         class="mr-2 my-4"
                         :color="color" :key="color" v-for="color in colors" @click="selectThemeColor(color)"/>
             </SettingItem>
-            <SettingItem icon="mdi-vibrate" label="Vibrate on digit complete">
+            <SettingItem icon="mdi-vibrate" label="Vibrate on digit complete, error and countdown">
                 <v-switch color="sudoku" v-model="vibrateOnDigitComplete"/>
             </SettingItem>
             <SettingItem icon="mdi-timer-outline" label="Show countdown timer bar">
