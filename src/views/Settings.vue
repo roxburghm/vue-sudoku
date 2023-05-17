@@ -45,6 +45,10 @@
                 <v-switch color="sudoku" v-model="completeSingleNote"/>
             </SettingItem>
 
+            <SettingItem icon="mdi-pencil-off" label="Invisibly lock correct cells">
+                <v-switch color="sudoku" v-model="lockCorrectCells"/>
+            </SettingItem>
+
             <div class="headline font-weight-light mt-4">
                 Buy Me A Coffee
             </div>
@@ -78,6 +82,14 @@ export default {
     computed: {
         colors() {
             return Themer.AvailableThemes;
+        },
+        lockCorrectCells: {
+            get() {
+                return this.$store.state.lockCorrectCells
+            },
+            set(value) {
+                this.$store.commit('lockCorrectCells', value);
+            }
         },
         hideCoffee: {
             get() {

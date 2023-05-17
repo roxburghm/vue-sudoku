@@ -10,6 +10,7 @@ const MAX_HISTORY = 20;
 
 const PUZZLEHELPER = new SudokuGrid(SudokuLevels.EMPTY);
 
+const LS_SUDOKU_LOCK_CORRECT_CELLS = 'SudokuLockCorrectCells';
 const LS_SUDOKU_SHOW_COUNTDOWN = 'SudokuShowCountdown';
 const LS_SUDOKU_SECONDS_TAKEN = 'SudokuSecondsTaken';
 const LS_SUDOKU_STATE = 'SudokuState';
@@ -121,11 +122,16 @@ export default new Vuex.Store({
         dragToScrub: _getBooleanFromLS(LS_SUDOKU_DRAG_TO_SCRUB, true),
         hideCoffee: _getBooleanFromLS(LS_SUDOKU_HIDE_COFFEE, false),
         completeSingleNote: _getBooleanFromLS(LS_SUDOKU_COMPLETE_SINGLE_NOTE, false),
+        lockCorrectCells: _getBooleanFromLS(LS_SUDOKU_LOCK_CORRECT_CELLS, false),
     },
     mutations: {
         hideCoffee(state, payload) {
             state.hideCoffee = payload;
             _setBooleanToLS(LS_SUDOKU_HIDE_COFFEE, state.hideCoffee)
+        },
+        lockCorrectCells(state, payload) {
+            state.lockCorrectCells = payload;
+            _setBooleanToLS(LS_SUDOKU_LOCK_CORRECT_CELLS, state.lockCorrectCells)
         },
         completeSingleNote(state, payload) {
             state.completeSingleNote = payload;
@@ -249,6 +255,9 @@ export default new Vuex.Store({
             state.history = payload
         },
         setCellGuess(state, {cellIndex, guess}) {
+            if (state.lockCorrectCells && parseInt(state.cells[cellIndex].guess) === parseInt(state.cells[cellIndex].actual)) {
+                return;
+            }
             state.cells[cellIndex].guess = guess === 0 ? '' : guess;
             puzzleChanged(this);
             if (state.vibrateOnDigitComplete && state.digitCounts[guess - 1] === 9) {
