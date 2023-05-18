@@ -12,8 +12,8 @@
                 <span class="text-capitalize mx-1">{{ level }}</span> <span class="mx-1 grey--text text--lighten-2">&mdash;</span>
                 <elapsed-time :seconds="$store.state.secondsTaken"/>
             </v-chip>
-            <v-avatar v-if="showCountdown && countdownClock"
-                      color="sudoku sudoku-cell-color--text" class="countdown-timer breathe headline" size="36">{{ countdownClock }}</v-avatar>
+            <v-avatar v-if="showCountdown && countdownClock" :style="countDownStyle"
+                      color="sudoku white--text" class="countdown-timer breathe headline" size="36">{{ countdownClock }}</v-avatar>
             <div v-if="paused">
             <v-icon @click="$store.commit('togglePaused')" class="grid-size overflow-hidden" color="sudoku">mdi-pause-circle-outline</v-icon>
             </div>
@@ -40,7 +40,8 @@ export default {
     data() {
         return {
             intervalTimer: null,
-            countdownClock: ''
+            countdownClock: '',
+            countdownToHighScore: false
         }
     },
     mounted() {
@@ -64,6 +65,7 @@ export default {
                 let secondsLeftForHighScore = this.fastestTime - seconds;
                 let secondsLeftForTopScore = this.slowestTime - seconds;
                 let remainingSeconds = secondsLeftForHighScore > 0 ? secondsLeftForHighScore : secondsLeftForTopScore;
+                this.countdownToHighScore = secondsLeftForHighScore > 0;
                 if (remainingSeconds > 0 && remainingSeconds <= 10) {
                     this.countdownClock = remainingSeconds
                 } else {
@@ -145,6 +147,13 @@ export default {
         },
         showCountdown() {
             return this.$store.state.showCountdown;
+        },
+        countDownStyle() {
+            if (this.countdownToHighScore) {
+                return '--v-sudoku-base: var(--v-gold-base);'
+            } else {
+                return ''
+            }
         }
     }
 }
