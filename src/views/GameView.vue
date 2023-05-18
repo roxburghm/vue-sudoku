@@ -12,6 +12,8 @@
                 <span class="text-capitalize mx-1">{{ level }}</span> <span class="mx-1 grey--text text--lighten-2">&mdash;</span>
                 <elapsed-time :seconds="$store.state.secondsTaken"/>
             </v-chip>
+            <v-avatar v-if="showCountdown && countdownClock"
+                      color="sudoku sudoku-cell-color--text" class="countdown-timer breathe headline" size="36">{{ countdownClock }}</v-avatar>
             <div v-if="paused">
             <v-icon @click="$store.commit('togglePaused')" class="grid-size overflow-hidden" color="sudoku">mdi-pause-circle-outline</v-icon>
             </div>
@@ -38,6 +40,7 @@ export default {
     data() {
         return {
             intervalTimer: null,
+            countdownClock: ''
         }
     },
     mounted() {
@@ -61,8 +64,10 @@ export default {
                 let secondsLeftForHighScore = this.fastestTime - seconds;
                 let secondsLeftForTopScore = this.slowestTime - seconds;
                 let remainingSeconds = secondsLeftForHighScore > 0 ? secondsLeftForHighScore : secondsLeftForTopScore;
-                if (remainingSeconds > 0 && remainingSeconds < 6) {
-                    navigator.vibrate(remainingSeconds ? 10 : 200);
+                if (remainingSeconds > 0 && remainingSeconds <= 10) {
+                    this.countdownClock = remainingSeconds
+                } else {
+                    this.countdownClock = '';
                 }
             },
             immediate: true
@@ -118,22 +123,22 @@ export default {
             return this.$store.state.secondsTaken;
         },
         slowestTime() {
+            if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 30;
             let highScoreCount = this.$store.state.highScores[this.level].length;
             if (highScoreCount === 0) return 0;
             return this.$store.state.highScores[this.level][highScoreCount - 1].time;
         },
         fastestTime() {
+            if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 15;
             if (this.$store.state.highScores[this.level].length === 0) return 0;
             return this.$store.state.highScores[this.level][0].time;
         },
         pcntTimeLeftTopScore() {
-            if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 30;
             if (this.slowestTime === 0) return 0;
             let pcntTimeLeft = 100 - (this.secondsTaken / this.fastestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
         },
         pcntTimeLeftHighScore() {
-            if (process.env.VUE_APP_TEST_HIGH_SCORE_TIMER) return 60;
             if (this.slowestTime === 0) return 0;
             let pcntTimeLeft = 100 - (this.secondsTaken / this.slowestTime * 100);
             return pcntTimeLeft < 0 ? 0 : pcntTimeLeft;
@@ -146,7 +151,12 @@ export default {
 </script>
 
 <style>
-
+.countdown-timer {
+    position: absolute;
+    right: 24px;
+    top: 20px;
+    animation-duration: 1s;
+}
 
 .grid-size {
     font-size: calc(var(--sudoku-block-border) * 2 + var(--sudoku-cell-border-size) * 6 + var(--sudoku-cell-size) * 9 + var(--sudoku-grid-border-overhang) * 2)  !important;
