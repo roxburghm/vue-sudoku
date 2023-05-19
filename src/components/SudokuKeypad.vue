@@ -47,8 +47,9 @@
         </div>
 
         <v-dialog v-model="isRestartVisible" max-width="500">
-            <SudokuRestart @difficulty="difficultySelect" @close-dialog="isRestartVisible = false" title="Restart?">
-                <p>Select a difficulty level to restart the puzzle or cancel to continue with the current puzzle</p>
+            <SudokuRestart @difficulty="difficultySelect" @close-dialog="isRestartVisible = false" title="Restart?"
+            cancel="Continue current game">
+                <p>Select a new difficulty level to restart</p>
             </SudokuRestart>
         </v-dialog>
 
