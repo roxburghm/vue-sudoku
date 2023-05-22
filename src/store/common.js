@@ -1,5 +1,8 @@
 import { PUZZLEHELPER } from "@/plugins/sudoku";
 
+
+
+
 function countDigits(cells) {
     return cells.reduce((digitCount, { guess }) => {
         if (guess > 0) {

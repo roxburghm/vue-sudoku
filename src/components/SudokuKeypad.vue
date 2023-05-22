@@ -46,7 +46,7 @@
                         :selected="isNotesMode" icon="mdi-pencil" :shortcut="['n']"/>
         </div>
 
-        <v-dialog v-model="isRestartVisible" max-width="500">
+        <v-dialog v-model="isRestartVisible" max-width="500" content-class="rounded-xl">
             <SudokuRestart @difficulty="difficultySelect" @close-dialog="isRestartVisible = false" title="Restart?"
             cancel="Continue current game">
                 <p>Select a new difficulty level to restart</p>
@@ -153,4 +153,8 @@ export default {
 .disabled {
     opacity: 0.3;
 }
+</style>
+
+<style lang="sass" scoped>
+$dialog-border-radius: 80px
 </style>
