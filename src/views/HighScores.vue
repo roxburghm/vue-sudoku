@@ -5,9 +5,9 @@
             <div class="my-6">
                 <div class="my-6">
                     <div v-if="highScore" style="--v-sudoku-base: var(--v-gold-base)">
-                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe-gold"/>
-                    <sudoku-logo icon="mdi-cupcake" :size="128" color="gold" class="breathe-gold mx-6"/>
-                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe-gold"/>
+                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe"/>
+                    <sudoku-logo icon="mdi-cupcake" :size="128" color="gold" class="breathe mx-6"/>
+                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe"/>
                     </div>
                     <sudoku-logo v-else :size="128" :rotated="false" icon="mdi-check-circle-outline" class="breathe"/>
                 </div>
