@@ -96,7 +96,7 @@ export default {
         if (state.vibrateOnDigitComplete && state.digitCounts[guess - 1] === 9) {
             Vibrate.completeDigit()
         }
-        if (state.solved === 9) {
+        if (state.solved) {
             Vibrate.completeGame()
         }
         if (state.validation && parseInt(state.cells[cellIndex].guess) !== parseInt(state.cells[cellIndex].actual)) {
