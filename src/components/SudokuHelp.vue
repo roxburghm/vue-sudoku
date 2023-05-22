@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-xl">
+    <v-card>
         <v-card-title class="justify-center headline">Help</v-card-title>
         <v-card-text class="font-weight-light">
             <v-divider/>
