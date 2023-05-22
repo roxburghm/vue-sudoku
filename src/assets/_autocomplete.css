@@ -1,6 +1,7 @@
 :root {
     --v-sudoku-base: #000;
     --v-sudoku-cell-color-base: #000;
+    --v-gold-base: #000;
     --v-gold-lighten1: #000;
     --v-neutral-lighten1: #000;
     --v-neutral-lighten3: #000;
