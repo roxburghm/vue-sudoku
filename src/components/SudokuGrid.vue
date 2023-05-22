@@ -17,6 +17,7 @@
 
 <script>
 import SudokuBlock from "@/components/SudokuBlock.vue";
+import vibrate from "@/lib/vibrate";
 
 export default {
     name: "SudokuGrid",
@@ -45,7 +46,7 @@ export default {
             let cell = this.findCellIndexOfMoveEvent(event);
             this.draggedCells = [];
             this.dragStartTimer = setTimeout(() => {
-                navigator.vibrate(50);
+                vibrate.drag();
                 this.dragStartTimer = null;
                 this.draggedCells.push(cell);
             }, 500);
@@ -67,8 +68,7 @@ export default {
             if (this.$store.state.cells[cell].locked) {
                 return;
             }
-
-            navigator.vibrate(50);
+            vibrate.drag();
             this.draggedCells.push(cell);
         },
         clearDragTimer() {

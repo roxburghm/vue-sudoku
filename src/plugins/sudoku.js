@@ -174,3 +174,5 @@ export const SudokuDigits = {
     EMPTY: -1
 }
 
+export const PUZZLEHELPER = new SudokuGrid(SudokuLevels.EMPTY);
+

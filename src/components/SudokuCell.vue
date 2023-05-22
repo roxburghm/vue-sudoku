@@ -1,148 +1,178 @@
 <template>
-    <div class="sudoku-cell d-inline-block" :data-cell-index="index"
-         @click="toggleCellSelect"
-         :class="cellTypeClass + ' ' + cellAdditionalClass">
-        <v-scale-transition origin="center center">
-            <div class="sudoku-cell-indicator"></div>
-        </v-scale-transition>
-        <div class="sudoku-cell-content justify-center align-center">
-            <div v-if="showNotes" class="sudoku-notes justify-center text-center d-flex fill-height align-center">
-                <sudoku-notes :notes="cell.notes" :key="cellNotesKey"/>
-            </div>
-            <v-scale-transition origin="center center" v-else>
-                <div class="guess" :class="`guess-${cellGuess}`" v-if="visible">
-                    {{ cellGuess }}
-                </div>
-            </v-scale-transition>
+  <div
+    class="sudoku-cell d-inline-block"
+    :data-cell-index="index"
+    @click="toggleCellSelect"
+    :class="cellTypeClass + ' ' + cellAdditionalClass"
+  >
+    <v-scale-transition origin="center center">
+      <div class="sudoku-cell-indicator"></div>
+    </v-scale-transition>
+    <div class="sudoku-cell-content justify-center align-center">
+      <div
+        v-if="showNotes"
+        class="sudoku-notes justify-center text-center d-flex fill-height align-center"
+      >
+        <sudoku-notes :notes="cell.notes" :key="cellNotesKey" />
+      </div>
+      <v-scale-transition origin="center center" v-else>
+        <div class="guess" :class="`guess-${cellGuess}`" v-if="visible">
+          {{ cellGuess }}
         </div>
-
+      </v-scale-transition>
     </div>
+  </div>
 </template>
 
 <script>
 import SudokuNotes from "@/components/SudokuNotes.vue";
 
 export default {
-    name: "SudokuCell",
-    components: {SudokuNotes},
-    props: {
-        index: {type: Number, required: true},
-        transparentCells: {type: Array, required: true}
+  name: "SudokuCell",
+  components: { SudokuNotes },
+  props: {
+    index: { type: Number, required: true },
+    transparentCells: { type: Array, required: true },
+  },
+  data() {
+    return {
+      visible: true,
+      localTransparentCells: [],
+    };
+  },
+  watch: {
+    transparentCells: {
+      immediate: true,
+      handler() {
+        this.localTransparentCells = [...this.transparentCells];
+      },
+      deep: true,
     },
-    data() {
-        return {
-            visible: true,
-            localTransparentCells: []
-        }
+    cellGuess() {
+      this.visible = false;
+      this.$nextTick(() => {
+        this.visible = true;
+      });
     },
-    watch: {
-        transparentCells: {
-            immediate: true,
-            handler() {
-                this.localTransparentCells = [...this.transparentCells];
-            },
-            deep: true
-        },
-        cellGuess() {
-            this.visible = false;
-            this.$nextTick(() => {
-                this.visible = true;
-            })
-        }
+  },
+  methods: {
+    toggleCellSelect() {
+      if (this.cellLocked) return;
 
-    },
-    methods: {
-        toggleCellSelect() {
-            if (this.cellLocked) return;
-            let digit = this.selectedDigit;
-            if (digit < 0) {
-                if (this.canCompleteSingleNote) {
-                    let notes = this.cells[this.index].notes;
-                    let note = notes.reduce((acc, value, note) => Math.max(acc, value ? note + 1 : 0));
-                    digit = note;
-                } else {
-                    this.selectedCell = this.selectedCell === this.index ? -1 : this.index;
-                    return;
-                }
-            }
+      let digit = this.selectedDigit;
 
-            this.$store.commit('pushGameHistory');
-            this.toggleCellGuessOrNote(this.index, digit)
-            this.$store.dispatch('saveGame');
-        },
-        containsDigit(digit) {
-            if (digit) {
-                return this.showNotes ? false : parseInt(this.cellGuess) === parseInt(digit);
-            }
-            return false;
-        },
-    },
-    computed: {
-        canCompleteSingleNote() {
-            return this.noteCount === 1
-                && this.selectedCell === this.index
-                && this.$store.state.completeSingleNote
-                && !this.$store.state.isNotesMode
-                && this.cells[this.index].guess === ''
-        },
-        isTransparent() {
-            return this.localTransparentCells.includes(`${this.index}`);
-        },
-        cellAdditionalClass() {
-            return (this.showNotes ? 'cell-notes' : '') + ' ' + (this.cellLocked ? 'cell-locked' : '')
-        },
-        cellTypeClass() {
-            if (this.isTransparent) return 'cell-transparent';
-            if (this.cellSelected) return 'cell-selected';
-            // eslint-disable-next-line no-constant-condition
-            if (this.isValidationOn && this.cellGuess !== '' && parseInt(this.cellGuess) !== parseInt(this.cellActual)) return 'cell-incorrect';
-            if (this.cellHighlighted) return 'cell-highlighted';
-            if (this.cellLocked) return 'cell-locked';
-            if (this.showNotes && this.noteCount === 1 && this.$store.state.highlightSingleNote) {
-                return 'cell-single-note';
-            }
-            return '';
-        },
-        hasIndicator() {
-            return this.cellSelected || this.cellLocked || this.cellHighlighted;
-        },
-        cellSelected() {
-            return this.selectedCell === this.index;
-        },
-        cell() {
-            return this.cells[this.index]
-        },
-        cellGuess() {
-            return this.cell.guess
-        },
-        cellLocked() {
-            return this.cell.locked
-        },
-        cellHighlighted() {
-            if (this.selectedDigit >= 0) {
-                return this.containsDigit(this.selectedDigit);
-            } else if (this.selectedCell >= 0) {
-                return this.containsDigit(this.cells[this.selectedCell].guess);
-            }
-            return false;
-        },
-        cellActual() {
-            return this.cell.actual
-        },
-        noteCount() {
-            return this.cell.notes.reduce((acc, note) => acc + (note ? 1 : 0), 0);
-        },
-        hasNotes() {
-            return this.cell.notes.reduce((acc, note) => acc || note, false);
-        },
-        showNotes() {
-            return this.cellGuess === '' && (this.hasNotes || (this.isNotesMode && this.selectedCell === this.index));
-        },
-        cellNotesKey() {
-            return 'cnk-' + this.cell.notes.join('');
+      if (digit < 0) {
+        if (this.canCompleteSingleNote) {
+          const notes = this.cells[this.index].notes;
+          const note = notes.reduce((acc, value, note) =>
+            Math.max(acc, value ? note + 1 : 0)
+          );
+          digit = note;
+        } else {
+          this.selectedCell =
+            this.selectedCell === this.index ? -1 : this.index;
+          return;
         }
-    }
-}
+      }
+
+      this.$store.commit("pushGameHistory");
+      this.toggleCellGuessOrNote(this.index, digit);
+      this.$store.dispatch("saveGame");
+    },
+    containsDigit(digit) {
+      if (digit) {
+        return this.showNotes
+          ? false
+          : parseInt(this.cellGuess) === parseInt(digit);
+      }
+      return false;
+    },
+  },
+  computed: {
+    canCompleteSingleNote() {
+      return (
+        this.noteCount === 1 &&
+        this.selectedCell === this.index &&
+        this.$store.state.completeSingleNote &&
+        !this.$store.state.isNotesMode &&
+        this.cells[this.index].guess === ""
+      );
+    },
+    isTransparent() {
+      return this.localTransparentCells.includes(`${this.index}`);
+    },
+    cellAdditionalClass() {
+      return (
+        (this.showNotes ? "cell-notes" : "") +
+        " " +
+        (this.cellLocked ? "cell-locked" : "")
+      );
+    },
+    cellTypeClass() {
+      if (this.isTransparent) return "cell-transparent";
+      if (this.cellSelected) return "cell-selected";
+      // eslint-disable-next-line no-constant-condition
+      if (
+        this.isValidationOn &&
+        this.cellGuess !== "" &&
+        parseInt(this.cellGuess) !== parseInt(this.cellActual)
+      )
+        return "cell-incorrect";
+      if (this.cellHighlighted) return "cell-highlighted";
+      if (this.cellLocked) return "cell-locked";
+      if (
+        this.showNotes &&
+        this.noteCount === 1 &&
+        this.$store.state.highlightSingleNote
+      ) {
+        return "cell-single-note";
+      }
+      return "";
+    },
+    hasIndicator() {
+      return this.cellSelected || this.cellLocked || this.cellHighlighted;
+    },
+    cellSelected() {
+      return this.selectedCell === this.index;
+    },
+    cell() {
+      return this.cells[this.index];
+    },
+    cellGuess() {
+      return this.cell.guess;
+    },
+    cellLocked() {
+      return this.cell.locked;
+    },
+    cellHighlighted() {
+      if (this.selectedDigit >= 0) {
+        return this.containsDigit(this.selectedDigit);
+      } else if (this.selectedCell >= 0) {
+        return this.containsDigit(this.cells[this.selectedCell].guess);
+      }
+      return false;
+    },
+    cellActual() {
+      return this.cell.actual;
+    },
+    noteCount() {
+      return this.cell.notes.reduce((acc, note) => acc + (note ? 1 : 0), 0);
+    },
+    hasNotes() {
+      return this.cell.notes.reduce((acc, note) => acc || note, false);
+    },
+    showNotes() {
+      return (
+        this.cellGuess === "" &&
+        (this.hasNotes ||
+          (this.isNotesMode && this.selectedCell === this.index))
+      );
+    },
+    cellNotesKey() {
+      return "cnk-" + this.cell.notes.join("");
+    },
+  },
+};
 </script>
 
 <!--suppress CssUnusedSymbol -->
@@ -200,7 +230,6 @@ export default {
   color: var(--v-sudoku-base);
 }
 
-
 .sudoku-cell {
   background-color: var(--v-sudoku-cell-color-base);
 }
@@ -210,7 +239,7 @@ export default {
 }
 
 .cell-single-note .sudoku-notes {
-  background-color: var(--v-sudoku-lighten4);;
+  background-color: var(--v-sudoku-lighten4);
 }
 
 .sudoku-cell .sudoku-notes {
@@ -245,7 +274,8 @@ export default {
   line-height: var(--sudoku-cell-size);
 }
 
-.sudoku-cell .guess.guess-4, .sudoku-cell .guess.guess-5 {
+.sudoku-cell .guess.guess-4,
+.sudoku-cell .guess.guess-5 {
   margin-left: -2px;
 }
 
@@ -262,12 +292,8 @@ export default {
     background-color: var(--v-sudoku-cell-color-lighten2);
   }
 
-
   .cell-single-note .sudoku-notes {
-    background-color: var(--v-sudoku-darken4);;
+    background-color: var(--v-sudoku-darken4);
   }
-
 }
-
-
 </style>
