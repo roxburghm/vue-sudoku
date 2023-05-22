@@ -1,5 +1,5 @@
 <template>
-    <v-card elevation="0" class="rounded-xl">
+    <v-card elevation="0">
         <v-card-title class="headline justify-center d-flex flex-column">
             <sudoku-logo :size="128" class="d-block my-8"/>
             <div>{{ title }}</div></v-card-title>

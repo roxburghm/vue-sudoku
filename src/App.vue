@@ -33,8 +33,8 @@
             <router-view/>
         </v-main>
 
-        <v-dialog v-model="isHelpVisible" max-width="500">
-            <SudokuHelp @close-dialog="isHelpVisible = false"/>
+        <v-dialog v-model="isHelpVisible" max-width="500" content-class="rounded-xl">
+            <SudokuHelp @close-dialog="isHelpVisible = false" class=""/>
         </v-dialog>
 
         <v-dialog persistent :value="updateExists" :timeout="-1" color="black" outlined rounded max-width="400">
