@@ -86,10 +86,22 @@ export default {
                 return;
             }
 
+
             // OK we have a list of cells, if we have a keypad value selected we need to clear the note
             // for this digit in each cell.
+            let pushedHistory = false;
             for (let cell of this.draggedCells) {
-                this.$store.commit('setCellNote', {cellIndex: cell, digit: this.selectedDigit, value: false});
+                if (this.$store.state.cells[cell].notes[this.selectedDigit - 1]) {
+                    if (!pushedHistory) {
+                        console.log('pushing history', cell, this.$store.state.cells[cell].notes);
+                        pushedHistory = true;
+                        this.$store.commit('pushGameHistory');
+                    }
+                    this.$store.commit('setCellNote', {cellIndex: cell, digit: this.selectedDigit, value: false});
+                }
+            }
+            if (pushedHistory) {
+                this.$store.dispatch('saveGame');
             }
 
             this.draggedCells = [];
