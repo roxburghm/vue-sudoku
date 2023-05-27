@@ -37,7 +37,7 @@
                 <v-switch color="sudoku" v-model="allowAutoNotes"/>
             </SettingItem>
 
-            <SettingItem icon="mdi-marker" label="Highlight notes containing single value">
+            <SettingItem icon="mdi-marker" label="Highlight notes for current digit containing single value">
                 <v-switch color="sudoku" v-model="highlightSingleNote"/>
             </SettingItem>
 

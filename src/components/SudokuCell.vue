@@ -64,10 +64,9 @@ export default {
       if (digit < 0) {
         if (this.canCompleteSingleNote) {
           const notes = this.cells[this.index].notes;
-          const note = notes.reduce((acc, value, note) =>
+          digit = notes.reduce((acc, value, note) =>
             Math.max(acc, value ? note + 1 : 0)
           );
-          digit = note;
         } else {
           this.selectedCell =
             this.selectedCell === this.index ? -1 : this.index;
@@ -123,7 +122,9 @@ export default {
       if (
         this.showNotes &&
         this.noteCount === 1 &&
-        this.$store.state.highlightSingleNote
+        this.$store.state.highlightSingleNote &&
+          this.selectedDigit > 0 &&
+          this.cells[this.index].notes[this.selectedDigit - 1]
       ) {
         return "cell-single-note";
       }
