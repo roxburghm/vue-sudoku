@@ -1,7 +1,13 @@
-version: "3.3"
+version: '3.8'
 
 services:
-  ui:
-    image: "ghcr.io/roxburghm/sudoku:latest"
-    expose:
-      - "8080"
+  app:
+    image: roxburghm/sudoku
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        repo: github.com/roxburghm/vue-sudoku
+
+    ports:
+      - 8502:8080
