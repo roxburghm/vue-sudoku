@@ -10,13 +10,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install
+RUN yarn install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
 # build app for production with minification
-RUN npm run build
+RUN yarn run build
 
 EXPOSE 8080
 CMD [ "http-server", "-P", "http://localhost:8080?", "dist" ]
