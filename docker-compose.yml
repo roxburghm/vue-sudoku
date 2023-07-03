@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+  ui:
+    image: "ghcr.io/roxburghm/sudoku:latest"
+    expose:
+      - "8080"
