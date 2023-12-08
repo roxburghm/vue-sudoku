@@ -1,8 +1,11 @@
 <template>
     <v-card elevation="0">
-        <v-card-title class="headline justify-center d-flex flex-column">
-            <sudoku-logo :size="128" class="d-block my-8"/>
-            <div>{{ title }}</div></v-card-title>
+        <v-card-title class="headline justify-center">
+          <div class="d-block">
+            <div><sudoku-logo :size="128" class="my-8"/></div>
+            <div class="text-center">{{ title }}</div>
+      </div>
+        </v-card-title>
         <v-card-text class="text-center">
             <slot></slot>
             <v-list>
@@ -20,7 +23,7 @@
 <script>
 import {SudokuLevels} from "@/plugins/sudoku";
 import SudokuRestartLevel from "@/components/SudokuRestartLevel.vue";
-import SudokuLogo from "@/views/SudokuLogo.vue";
+import SudokuLogo from "@/components/SudokuLogo.vue";
 
 export default {
     name: 'SudokuRestart',

@@ -26,24 +26,24 @@
                         :shortcut="['9']"/>
             <sudoku-key :small="isSmallButton" @click="toggleDigit(0)" :digit="0" :selected="0 === selectedDigit"
                         :shortcut="{ zero: ['0'], e: ['e'], backspace: ['backspace' ], delete: ['del'] }"
-                        icon="mdi-eraser"/>
+                        :icon="svgIcons.mdiEraser"/>
         </div>
         <v-divider class="my-3"/>
         <div class="d-flex flex-row justify-center">
             <sudoku-key
                     v-if="allowValidation"
                     :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" :selected="isValidationOn"
-                    @click="toggleValidation" icon="mdi-check" :shortcut="['ctrl', 'v']"/>
+                    @click="toggleValidation" :icon="svgIcons.mdiCheck" :shortcut="['ctrl', 'v']"/>
             <sudoku-key
                     v-if="allowAutoNotes"
-                    color="gray" :small="isSmallButton" @click="autoNotes" @clickx="autoNotes" icon="mdi-dots-grid"
+                    color="gray" :small="isSmallButton" @click="autoNotes" @clickx="autoNotes" :icon="svgIcons.mdiDotsGrid"
                     :shortcut="['ctrl', 'alt', 'n']"/>
-            <sudoku-key color="gray" :small="isSmallButton" @click="isRestartVisible = true" icon="mdi-refresh"
+            <sudoku-key color="gray" :small="isSmallButton" @click="isRestartVisible = true" :icon="svgIcons.mdiRefresh"
                         :shortcut="['ctrl', 'alt', 'r']"/>
             <sudoku-key color="gray" :small="isSmallButton" :disabled="historyLength === 0" @click="undo"
-                        icon="mdi-undo" :shortcut="['ctrl', 'z']"/>
+                        :icon="svgIcons.mdiUndo" :shortcut="['ctrl', 'z']"/>
             <sudoku-key :color="isValidationOn ? 'secondary' : 'gray'" :small="isSmallButton" @click="toggleNotesMode"
-                        :selected="isNotesMode" icon="mdi-pencil" :shortcut="['n']"/>
+                        :selected="isNotesMode" :icon="svgIcons.mdiPencil" :shortcut="['n']"/>
         </div>
 
         <v-dialog v-model="isRestartVisible" max-width="500" content-class="rounded-xl">

@@ -1,6 +1,6 @@
 {
   "name": "sudoku",
-  "version": "1.4.15",
+  "version": "1.5.0",
   "private": true,
   "description": "A simple and elegant sudoku game for the web with no ads or tracking.",
   "author": "Matt Roxburgh",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@mdi/js": "^7.3.67",
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "~5.0.8",
     "@vue/cli-plugin-pwa": "~5.0.8",

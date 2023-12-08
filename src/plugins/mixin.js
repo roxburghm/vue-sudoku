@@ -1,3 +1,5 @@
+import Icons from '@/plugins/icons';
+
 export default {
     methods: {
         toggleCellGuessOrNote(cellIndex, guess) {
@@ -40,6 +42,9 @@ export default {
         }
     },
     computed: {
+        svgIcons() {
+            return Icons;
+        },
         theme() {
             return this.$store.state.themeDark ? 'Dark' : 'Light';
         },

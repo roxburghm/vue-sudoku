@@ -5,14 +5,14 @@
             <v-divider/>
             <v-simple-table>
                 <tbody>
-                <SudokuHelpItem icon="mdi-help" title="Help" text="Shows this help"/>
-                <SudokuHelpItem icon="mdi-dots-grid" title="Automatic notes" text="Fills in all empty squares with the values that are not already in the row, column or block"/>
-                <SudokuHelpItem icon="mdi-refresh" title="New Game" text="Asks for a new difficulty level and starts a new game "/>
-                <SudokuHelpItem icon="mdi-undo" title="Undo Move" text="Undoes the last guess or note edit"/>
-                <SudokuHelpItem icon="mdi-eraser" title="Eraser" text="Clears the selected cell"/>
-                <SudokuHelpItem icon="mdi-pause" title="Pause" text="Pauses the game and the timer"/>
-                <SudokuHelpItem icon="mdi-cog" title="Settings" text="Game settings"/>
-                <SudokuHelpItem icon="mdi-coffee-to-go-outline" title="Buy me a coffee" text="Allows you to mae a small donation to buy me a coffee. There are no ads and you can turn this icon off in the settings."/>
+                <SudokuHelpItem :icon="svgIcons.mdiHelpCircleOutline" title="Help" text="Shows this help"/>
+                <SudokuHelpItem :icon="svgIcons.mdiDotsGrid" title="Automatic notes" text="Fills in all empty squares with the values that are not already in the row, column or block"/>
+                <SudokuHelpItem :icon="svgIcons.mdiRefresh" title="New Game" text="Asks for a new difficulty level and starts a new game "/>
+                <SudokuHelpItem :icon="svgIcons.mdiUndo" title="Undo Move" text="Undoes the last guess or note edit"/>
+                <SudokuHelpItem :icon="svgIcons.mdiEraser" title="Eraser" text="Clears the selected cell"/>
+                <SudokuHelpItem :icon="svgIcons.mdiPause" title="Pause" text="Pauses the game and the timer"/>
+                <SudokuHelpItem :icon="svgIcons.mdiCog" title="Settings" text="Game settings"/>
+                <SudokuHelpItem :icon="svgIcons.mdiCoffeeToGoOutline" title="Buy me a coffee" text="Allows you to mae a small donation to buy me a coffee. There are no ads and you can turn this icon off in the settings."/>
                 </tbody>
             </v-simple-table>
             <v-divider class="my-4"/>
@@ -54,7 +54,7 @@
                 </tbody>
             </v-simple-table>
             <v-divider class="my-4"/>
-            <p class="grey--text font-weight-light">Contact author via <a href="mailto:matt@roxburghm.com" class="text-decoration-none"><span class="secondary--text">matt<v-icon small color="secondary">mdi-at</v-icon>roxburghm.com</span></a> if you find any problems.</p>
+            <p class="grey--text font-weight-light">Contact author via <a href="mailto:matt@roxburghm.com" class="text-decoration-none"><span class="secondary--text">matt@roxburghm.com</span></a> if you find any problems.</p>
             <p class="grey--text font-weight-light font-italic">{{ version}}</p>
             <div class="justify-center text-center">
                 <v-btn  @click="$emit('close-dialog')">Close</v-btn>

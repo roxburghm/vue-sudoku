@@ -5,11 +5,11 @@
             <div class="my-6">
                 <div class="my-6">
                     <div v-if="highScore" style="--v-sudoku-base: var(--v-gold-base)">
-                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe"/>
-                    <sudoku-logo icon="mdi-cupcake" :size="128" color="gold" class="breathe mx-6"/>
-                    <sudoku-logo v-if="myPosition() === 1" icon="mdi-cupcake" :size="64" color="gold" class="breathe"/>
+                    <sudoku-logo v-if="myPosition() === 1" :icon="svgIcons.mdiCupcake" :size="64" color="gold" class="breathe"/>
+                    <sudoku-logo :icon="svgIcons.mdiCupcake" :size="128" color="gold" class="breathe mx-6"/>
+                    <sudoku-logo v-if="myPosition() === 1" :icon="svgIcons.mdiCupcake" :size="64" color="gold" class="breathe"/>
                     </div>
-                    <sudoku-logo v-else :size="128" :rotated="false" icon="mdi-check-circle-outline" class="breathe"/>
+                    <sudoku-logo v-else :size="128" :rotated="false" :icon="svgIcons.mdiCheckCircleOutline" class="breathe"/>
                 </div>
                 <div class="my-4">
                     <v-chip outlined large class="px-6" color="black">Your time in {{ level }} mode <span
@@ -52,7 +52,7 @@
 import ElapsedTime from "@/components/ElapsedTime.vue";
 import {SudokuLevels} from "@/plugins/sudoku";
 import CloneDeep from 'lodash/cloneDeep';
-import SudokuLogo from "@/views/SudokuLogo.vue";
+import SudokuLogo from "@/components/SudokuLogo.vue";
 
 const NO_OF_HIGH_SCORES = 10;
 

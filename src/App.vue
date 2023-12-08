@@ -13,18 +13,18 @@
                    href="https://www.buymeacoffee.com/matthewroxburgh" target="_blank" rel="noopener noreferrer"
                    class="text-decoration-none">
                     <v-btn icon large class="mr-2">
-                        <v-icon>mdi-coffee-to-go-outline</v-icon>
+                        <v-icon>{{ svgIcons.mdiCoffeeToGoOutline}}</v-icon>
                     </v-btn>
                 </a>
                 <v-btn @click="togglePause" icon v-show="$route.name === 'GameView'" large class="mr-2">
-                    <v-icon>mdi-pause</v-icon>
+                    <v-icon>{{ svgIcons.mdiPause }}</v-icon>
                 </v-btn>
                 <v-btn :color="$route.name === 'Settings' ? 'sudoku' : null" icon :to="{ name: $route.name === 'Settings' ? 'GameView' : 'Settings' }" large class="mr-2">
-                    <v-icon>mdi-cog</v-icon>
+                    <v-icon>{{ svgIcons.mdiCog }}</v-icon>
                 </v-btn>
                 <v-btn icon @click="isHelpVisible = true" large
                        v-shortkey="{q: ['?'], shiftQ: ['shift', '?'], slash: ['/']}" @shortkey="isHelpVisible = true">
-                    <v-icon>mdi-help-circle-outline</v-icon>
+                    <v-icon>{{ svgIcons.mdiHelpCircleOutline }}</v-icon>
                 </v-btn>
             </div>
         </v-app-bar>
@@ -46,7 +46,7 @@
                                 <v-img contain width="128" src="/images/icons/android-chrome-192x192.png"
                                        class="my-4 d-inline-block"/>
                             </v-avatar>
-                            <v-icon x-large class="rounded  white new-icon" color="yellow">mdi-new-box</v-icon>
+                            <v-icon x-large class="rounded  white new-icon" color="yellow">{{ svgIcons.mdiNewBox }}</v-icon>
                         </div>
                         <div class="text-h6 my-8 text-center font-weight-light">An update for this app is ready, click
                             update below to get all the new features without losing your game progress
@@ -65,7 +65,7 @@
 
 import SudokuHelp from "@/components/SudokuHelp.vue";
 import swmixin from "@/plugins/swmixin";
-import SudokuLogo from "@/views/SudokuLogo.vue";
+import SudokuLogo from "@/components/SudokuLogo.vue";
 import Themer from "@/plugins/themer";
 
 export default {
@@ -107,7 +107,6 @@ export default {
         '$store.state.themeColor':
             {
                 handler(newValue) {
-                    console.log('theme color changed', newValue)
                     Themer.SetThemeColor(newValue, this.$vuetify);
                 }
             }

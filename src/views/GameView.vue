@@ -15,7 +15,8 @@
             <v-avatar v-if="showCountdown && countdownClock" :style="countDownStyle"
                       color="sudoku white--text" class="countdown-timer breathe headline" size="36">{{ countdownClock }}</v-avatar>
             <div v-if="paused">
-            <v-icon @click="$store.commit('togglePaused')" class="grid-size overflow-hidden" color="sudoku">mdi-pause-circle-outline</v-icon>
+            <v-icon @click="$store.commit('togglePaused')" class="grid-size overflow-hidden" size="400"
+                    color="sudoku">{{ svgIcons.mdiPauseCircleOutline }}</v-icon>
             </div>
             <sudoku-grid v-else/>
             <sudoku-keypad @difficulty="difficultySelect"/>
@@ -27,7 +28,7 @@
 import SudokuGrid from "@/components/SudokuGrid.vue";
 import SudokuKeypad from "@/components/SudokuKeypad.vue";
 import ElapsedTime from "@/components/ElapsedTime.vue";
-import SudokuLogo from "@/views/SudokuLogo.vue";
+import SudokuLogo from "@/components/SudokuLogo.vue";
 
 export default {
     name: 'GameView',
